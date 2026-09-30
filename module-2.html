@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Модуль 2. Микронутриенты и БАДы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: одна колонка для телефона; липкая навигация-чипы; экраны-карточки «одна мысль» */
+:root{
+  --bg:#F2F5F1; --surface:#FFFFFF; --ink:#1C2923; --muted:#56655D; --line:#D7E0D9;
+  --accent:#2E6A4E; --accent-soft:#E1EEE6;
+  --prot:#A8435A; --fat:#C08A12; --carb:#3F74A8; --veg:#4E8A3A;
+  --warn-bg:#FFF4E0; --warn-ink:#6E4A00; --bad:#A33A2A; --good:#2E6A4E;
+  --f-display:"Unbounded", "Golos Text", system-ui, sans-serif;
+  --f-body:"Golos Text", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121A16; --surface:#1B2620; --ink:#E6EEE8; --muted:#A3B3A9; --line:#2E3D35;
+  --accent:#7CC6A0; --accent-soft:#223A2E;
+  --prot:#E08398; --fat:#E4B54A; --carb:#86B2DD; --veg:#8CC474;
+  --warn-bg:#3A2E14; --warn-ink:#F2D28C; --bad:#EE8B7B; --good:#7CC6A0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121A16; --surface:#1B2620; --ink:#E6EEE8; --muted:#A3B3A9; --line:#2E3D35;
+  --accent:#7CC6A0; --accent-soft:#223A2E;
+  --prot:#E08398; --fat:#E4B54A; --carb:#86B2DD; --veg:#8CC474;
+  --warn-bg:#3A2E14; --warn-ink:#F2D28C; --bad:#EE8B7B; --good:#7CC6A0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.55;-webkit-text-size-adjust:100%}
+.wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:8px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.55rem;font-weight:700}
+h2{font-size:1.2rem;font-weight:700;color:var(--accent)}
+h3{font-size:1.02rem;font-weight:500}
+p{margin:0}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+header.top{padding-block:20px 12px;display:grid;gap:10px}
+.lead{color:var(--muted)}
+nav.chips{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-inline:-16px;padding:8px 16px;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+nav.chips::-webkit-scrollbar{display:none}
+nav.chips a{display:inline-block;padding:6px 12px;margin-right:6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:.85rem}
+nav.chips a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section{scroll-margin-top:64px;padding-block:22px 6px;display:grid;gap:14px}
+.screen{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 16px;display:grid;gap:10px;min-width:0}
+.screen .n{font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.06em}
+.goal{background:var(--accent-soft);border-radius:14px;padding:16px;display:grid;gap:8px}
+.goal ul,.screen ul,.screen ol{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.num{font-variant-numeric:tabular-nums;font-weight:700}
+.term{font-weight:600;border-bottom:1px dashed var(--muted)}
+.src{font-size:.8rem;color:var(--muted)}
+.src a{color:var(--muted)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:baseline}
+.kv dt{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kv dd{margin:0;min-width:0}
+.dot{display:inline-block;width:.7em;height:.7em;border-radius:50%;margin-right:6px;vertical-align:baseline}
+.warn{background:var(--warn-bg);color:var(--warn-ink);border-radius:14px;padding:16px;display:grid;gap:8px}
+.warn h2{color:var(--warn-ink)}
+figure{margin:0;display:grid;gap:8px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted)}
+svg text{font-family:var(--f-body)}
+.case{display:grid;gap:10px}
+.quote{border-left:3px solid var(--fat);padding-left:12px;font-style:italic}
+.verdict{display:grid;gap:4px}
+.verdict b{color:var(--accent)}
+/* шпаргалка */
+.cheat{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:16px;display:grid;gap:10px}
+.cheat .row{display:grid;grid-template-columns:5.2em 1fr;gap:10px;align-items:baseline;border-top:1px solid var(--line);padding-top:8px}
+.cheat .row:first-of-type{border-top:0;padding-top:0}
+.cheat .row b{font-variant-numeric:tabular-nums}
+/* карточки */
+.cards{display:grid;gap:10px}
+.card{position:relative;min-height:128px;border-radius:14px;border:1px solid var(--line);background:var(--surface);padding:16px;text-align:left;font:inherit;color:inherit;cursor:pointer;display:grid;align-content:center;gap:6px}
+.card .side-b{display:none}
+.card[aria-pressed="true"]{background:var(--accent-soft)}
+.card[aria-pressed="true"] .side-a{display:none}
+.card[aria-pressed="true"] .side-b{display:block}
+.card .hint{font-size:.78rem;color:var(--muted)}
+.card:focus-visible,.opt:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cardnav{display:flex;gap:8px;align-items:center;justify-content:space-between}
+/* тест */
+.q{display:grid;gap:10px}
+.opts{display:grid;gap:8px}
+.opt{font:inherit;color:inherit;text-align:left;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.opt.right{border-color:var(--good);background:var(--accent-soft)}
+.opt.wrong{border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.expl{font-size:.95rem;border-radius:10px;padding:10px 12px;background:var(--bg)}
+.expl b.ok{color:var(--good)} .expl b.no{color:var(--bad)}
+.score{font-weight:700}
+.btn{font:inherit;font-weight:600;padding:10px 16px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:var(--surface);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+/* практика */
+.steps{counter-reset:s;display:grid;gap:10px;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;display:grid;grid-template-columns:2em 1fr;gap:8px}
+.steps li::before{content:counter(s);font-family:var(--f-display);font-weight:700;color:var(--accent)}
+.check{display:flex;gap:10px;align-items:flex-start}
+.check input{width:22px;height:22px;margin-top:3px;accent-color:var(--accent);flex:none}
+.sources ol{padding-left:1.2em;display:grid;gap:10px;margin:0;font-size:.92rem}
+.sources a{color:var(--accent);word-break:break-word}
+footer{padding-block:28px 0;color:var(--muted);font-size:.85rem;display:grid;gap:6px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <span class="eyebrow">Основы питания · Модуль 2 из 8 · ~25 минут</span>
+  <h1>Микронутриенты и БАДы</h1>
+  <p class="lead">Какие витамины и минералы важнее всего, каких чаще не хватает в России и что на самом деле такое БАД.</p>
+</header>
+
+<nav class="chips" aria-label="Разделы модуля">
+  <a href="#goal">Цель</a><a href="#micro">Микронутриенты</a><a href="#risk">Зоны риска</a><a href="#more">Больше ≠ лучше</a><a href="#bad">Что такое БАД</a><a href="#evidence">Доказательства</a><a href="#check">Как проверить</a><a href="#example">Пример</a><a href="#ad">Разбор рекламы</a><a href="#doctor">Когда к врачу</a><a href="#cheat">Шпаргалка</a><a href="#cards">Карточки</a><a href="#quiz">Тест</a><a href="#task">Задание</a><a href="#sources">Источники</a>
+</nav>
+
+<section id="goal">
+  <div class="goal">
+    <h2>После модуля вы сможете</h2>
+    <ul>
+      <li>назвать ключевые витамины и минералы, нормы и продукты-источники;</li>
+      <li>объяснить, почему в России чаще всего не хватает витамина D, йода и железа;</li>
+      <li>объяснить, почему избыток витаминов опасен;</li>
+      <li>рассказать, что такое БАД по закону и чем он отличается от лекарства;</li>
+      <li>проверить БАД по реестру и маркировке и оценить его рекламу.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="micro">
+  <h2>Микронутриенты</h2>
+  <div class="screen">
+    <span class="n">1 / 2</span>
+    <h3>Нужны в малых дозах, но без них нельзя</h3>
+    <p><span class="term">Микронутриенты</span> — витамины и минералы. Энергии они не дают, но участвуют почти во всех процессах: кроветворении, работе щитовидной железы, прочности костей, иммунитете.</p>
+    <p>Нормы для них указывают в миллиграммах (мг) и микрограммах (мкг). 1 мкг — тысячная доля миллиграмма.</p>
+    <p>Витамины делят на <b>жирорастворимые</b> (A, D, E, K) и <b>водорастворимые</b> (группа B, C). Жирорастворимые витамины накапливаются в организме, поэтому их избыток опаснее.</p>
+    <p class="src">Источники: МР 2.3.1.0253-21 [1]; NIH ODS [7]</p>
+  </div>
+
+  <div class="screen">
+    <span class="n">2 / 2</span>
+    <h3>Нормы для взрослой женщины и где их взять</h3>
+    <dl class="kv">
+      <dt>Витамин D<br>15 мкг</dt><dd>(600 МЕ) — жирная рыба (сельдь, скумбрия, лосось), яичный желток; основной путь — синтез в коже на солнце</dd>
+      <dt>Йод<br>150 мкг</dt><dd>йодированная соль, морская рыба и морепродукты</dd>
+      <dt>Железо<br>18 мг</dt><dd>красное мясо, печень, бобовые, гречка; из мяса усваивается лучше</dd>
+      <dt>Кальций<br>1000 мг</dt><dd>молочные продукты, сыр, творог, кунжут</dd>
+      <dt>Фолаты<br>400 мкг</dt><dd>зелёные листовые овощи, бобовые, печень</dd>
+      <dt>B12<br>3 мкг</dt><dd>только продукты животного происхождения: мясо, рыба, яйца, молочные</dd>
+      <dt>Магний<br>420 мг</dt><dd>крупы, орехи, бобовые, отруби</dd>
+      <dt>Витамин C<br>100 мг</dt><dd>шиповник, чёрная смородина, болгарский перец, капуста, цитрусовые</dd>
+    </dl>
+    <p class="src">Нормы: МР 2.3.1.0253-21 [1]; йод — рекомендация для взрослых (США, ВОЗ) [5]. Продукты-источники: NIH ODS [7]</p>
+  </div>
+</section>
+
+<section id="risk">
+  <h2>Три зоны риска в России</h2>
+  <div class="screen">
+    <h3>Витамин D</h3>
+    <p>По российским клиническим рекомендациям, у <b>70–95% взрослых</b> уровень витамина D в крови ниже оптимального (меньше 30 нг/мл). Весной его ниже всего.</p>
+    <p>Массовая проверка всем подряд <b>не рекомендуется</b>: анализ назначают людям из групп риска. Профилактическую дозу для 18–50 лет рекомендации называют 800–1000 МЕ в сутки, но решение о приёме принимают с врачом.</p>
+    <p class="src">Источник: клинические рекомендации Российской ассоциации эндокринологов «Дефицит витамина D», 2021 [4]</p>
+  </div>
+  <div class="screen">
+    <h3>Йод</h3>
+    <p>Почти вся территория России в той или иной степени йододефицитна. По оценкам, россияне получают около 20–40 мкг йода в сутки — в несколько раз меньше нормы.</p>
+    <p>Главный способ профилактики для всей семьи — <b>йодированная соль</b> вместо обычной, при этом общее количество соли не увеличивать (ВОЗ: меньше 5 г соли в сутки).</p>
+    <p>Минздрав готовил законопроект об обязательном использовании йодированной соли. Подтверждения, что закон принят, мы не нашли: проверьте статус на дату чтения.</p>
+    <p class="src">Источники: «Коммерсантъ», 2024, со ссылкой на НМИЦ эндокринологии [6]; ВОЗ [8]</p>
+  </div>
+  <div class="screen">
+    <h3>Железо</h3>
+    <p>Женщинам детородного возраста норма железа — 18 мг в сутки, выше, чем мужчинам, из-за ежемесячных потерь. Поэтому дефицит железа и анемия у женщин встречаются чаще.</p>
+    <p>Усталость, бледность, выпадение волос могут иметь много причин. Это повод сдать анализ у врача, а не начинать пить железо самостоятельно.</p>
+    <p class="src">Источники: МР 2.3.1.0253-21 [1]; NIH ODS [7]</p>
+  </div>
+</section>
+
+<section id="more">
+  <h2>Больше — не значит лучше</h2>
+  <figure class="screen" aria-labelledby="fig1cap">
+    <svg viewBox="0 0 340 300" role="img" aria-label="Шкала доз витамина D: от нормы до токсического уровня">
+      <defs>
+        <linearGradient id="gD" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" style="stop-color:var(--accent)"/>
+          <stop offset="0.6" style="stop-color:var(--fat)"/>
+          <stop offset="1" style="stop-color:var(--bad)"/>
+        </linearGradient>
+      </defs>
+      <rect x="24" y="16" width="22" height="268" rx="11" fill="url(#gD)"/>
+      <g font-size="13" fill="var(--ink)">
+        <line x1="46" y1="262" x2="70" y2="262" stroke="var(--muted)"/>
+        <text x="76" y="258" font-weight="700">600 МЕ/сут (15 мкг)</text>
+        <text x="76" y="275" fill="var(--muted)">норма потребления для взрослых</text>
+        <line x1="46" y1="200" x2="70" y2="200" stroke="var(--muted)"/>
+        <text x="76" y="196" font-weight="700">800–1000 МЕ/сут</text>
+        <text x="76" y="213" fill="var(--muted)">профилактика 18–50 лет (с врачом)</text>
+        <line x1="46" y1="120" x2="70" y2="120" stroke="var(--muted)"/>
+        <text x="76" y="116" font-weight="700">4000 МЕ/сут</text>
+        <text x="76" y="133" fill="var(--muted)">предел длительного приёма</text>
+        <text x="76" y="149" fill="var(--muted)">без контроля анализов</text>
+        <line x1="46" y1="36" x2="70" y2="36" stroke="var(--bad)"/>
+        <text x="76" y="32" font-weight="700" fill="var(--bad)">&gt;100 нг/мл в крови</text>
+        <text x="76" y="49" fill="var(--muted)">риск интоксикации: избыток</text>
+        <text x="76" y="65" fill="var(--muted)">кальция, камни в почках</text>
+      </g>
+    </svg>
+    <figcaption id="fig1cap">Схема 1. Витамин D: от нормы до опасного уровня. Нижние три отметки — суточные дозы, верхняя — концентрация в крови. По МР 2.3.1.0253-21 [1] и клиническим рекомендациям РАЭ [4].</figcaption>
+  </figure>
+  <div class="screen">
+    <p>Избыток микронутриентов вреден, и больше всего это касается жирорастворимых витаминов и железа.</p>
+    <ul>
+      <li><b>Витамин A:</b> головная боль, повреждение печени, снижение прочности костей, пороки развития плода.</li>
+      <li><b>Железо:</b> тошнота, рвота, повреждение печени и других органов.</li>
+      <li><b>Бета-каротин:</b> у курильщиков и людей, работающих с асбестом, в добавках повышал частоту рака лёгкого.</li>
+      <li><b>«Натуральное»</b> не значит безопасное: некоторые растительные добавки повреждают печень.</li>
+    </ul>
+    <p class="src">Источники: NIH ODS [7]; USPSTF, 2022 [10]</p>
+  </div>
+</section>
+
+<section id="bad">
+  <h2>Что такое БАД</h2>
+  <div class="screen">
+    <h3>По закону это пищевая продукция</h3>
+    <p class="quote">«Природные и (или) идентичные природным биологически активные вещества, а также пробиотические микроорганизмы, предназначенные для употребления одновременно с пищей или введения в состав пищевой продукции».</p>
+    <p class="src">ТР ТС 021/2011, статья 4 [2]</p>
+    <p>Что из этого следует:</p>
+    <ul>
+      <li>БАД <b>не является лекарством</b> и не предназначен для лечения болезней.</li>
+      <li>Каждый БАД проходит государственную регистрацию (свидетельство о госрегистрации, СГР). Она подтверждает безопасность и соответствие состава, но не доказывает, что добавка помогает. Поэтому закон запрещает в рекламе ссылаться на регистрационные исследования как на преимущество [3].</li>
+    </ul>
+  </div>
+</section>
+
+<section id="evidence">
+  <h2>Что говорят исследования</h2>
+  <div class="screen">
+    <h3>Мультивитамины для профилактики</h3>
+    <p>Независимая экспертная группа США (USPSTF, 2022) изучила добавки для профилактики сердечно-сосудистых болезней и рака у здоровых взрослых без дефицитов:</p>
+    <ul>
+      <li>мультивитамины и большинство отдельных добавок — <b>данных недостаточно</b>, чтобы рекомендовать их или отговаривать;</li>
+      <li>бета-каротин и витамин E — <b>рекомендовано не принимать</b>: пользы нет, а бета-каротин может навредить.</li>
+    </ul>
+    <p>Это не касается беременных, детей и людей с установленным дефицитом: им добавки назначает врач.</p>
+    <p class="src">Источник: USPSTF, 2022 [10]</p>
+  </div>
+  <div class="screen">
+    <h3>Омега-3</h3>
+    <p>Кокрейновский обзор 2020 года: 86 рандомизированных исследований, более 160 000 участников.</p>
+    <dl class="kv">
+      <dt>≈ −15%</dt><dd>триглицериды в крови снижаются (высокая достоверность)</dd>
+      <dt>≈ 0</dt><dd>влияние на общую смертность и сердечно-сосудистые события мало или отсутствует (высокая достоверность)</dd>
+    </dl>
+    <p class="src">Источник: Abdelhamid и соавт., Cochrane, 2020 [9]</p>
+  </div>
+</section>
+
+<section id="check">
+  <h2>Как проверить БАД</h2>
+  <figure class="screen" aria-labelledby="fig2cap">
+    <svg viewBox="0 0 340 430" role="img" aria-label="Порядок проверки БАД: реестр, маркировка, дозы, лекарства, реклама">
+      <g font-size="13" fill="var(--ink)">
+        <rect x="10" y="8" width="320" height="66" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="24" y="34" font-weight="700">1. Реестр</text>
+        <text x="24" y="54" fill="var(--muted)">есть ли номер СГР и совпадает ли он</text>
+        <text x="24" y="69" fill="var(--muted)">с продуктом в реестре</text>
+        <path d="M170 76 L170 92" stroke="var(--muted)" stroke-width="2"/><path d="M164 88 L170 98 L176 88 Z" fill="var(--muted)"/>
+        <rect x="10" y="100" width="320" height="66" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="24" y="126" font-weight="700">2. Маркировка</text>
+        <text x="24" y="146" fill="var(--muted)">«не является лекарственным средством»,</text>
+        <text x="24" y="161" fill="var(--muted)">рекомендации, противопоказания</text>
+        <path d="M170 168 L170 184" stroke="var(--muted)" stroke-width="2"/><path d="M164 180 L170 190 L176 180 Z" fill="var(--muted)"/>
+        <rect x="10" y="192" width="320" height="66" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="24" y="218" font-weight="700">3. Дозы</text>
+        <text x="24" y="238" fill="var(--muted)">% от нормы в порции; не дублирует ли</text>
+        <text x="24" y="253" fill="var(--muted)">другие добавки и обогащённые продукты</text>
+        <path d="M170 260 L170 276" stroke="var(--muted)" stroke-width="2"/><path d="M164 272 L170 282 L176 272 Z" fill="var(--muted)"/>
+        <rect x="10" y="284" width="320" height="66" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="24" y="310" font-weight="700">4. Лекарства и здоровье</text>
+        <text x="24" y="330" fill="var(--muted)">принимает ли человек лекарства, есть ли</text>
+        <text x="24" y="345" fill="var(--muted)">болезни, беременность → врач</text>
+        <path d="M170 352 L170 368" stroke="var(--muted)" stroke-width="2"/><path d="M164 364 L170 374 L176 364 Z" fill="var(--muted)"/>
+        <rect x="10" y="376" width="320" height="50" rx="12" fill="var(--accent-soft)" stroke="var(--line)"/>
+        <text x="24" y="398" font-weight="700">5. Реклама</text>
+        <text x="24" y="416" fill="var(--muted)">нет ли обещаний лечения и «излечений»</text>
+      </g>
+    </svg>
+    <figcaption id="fig2cap">Схема 2. Пять шагов проверки БАД перед покупкой или рекомендацией.</figcaption>
+  </figure>
+  <div class="screen">
+    <h3>Где проверять</h3>
+    <ul>
+      <li><b>Реестр свидетельств о госрегистрации</b> ведёт Роспотребнадзор: fp.crc.ru. Ищите по названию продукта или номеру СГР с упаковки. Есть и единый реестр ЕАЭС на портале Евразийской экономической комиссии.</li>
+      <li><b>На маркировке БАД</b> должны быть: указание, что продукт не является лекарственным средством, номер СГР, рекомендации по применению, противопоказания. Для веществ, ради которых БАД принимают, указывают процент от рекомендуемой суточной нормы.</li>
+      <li><b>Взаимодействия.</b> Добавки могут влиять на действие лекарств. Например, витамин K ослабляет действие препарата, разжижающего кровь (варфарина), а зверобой ускоряет разрушение многих лекарств, включая противозачаточные. Врачу нужно сообщать обо всех БАДах, которые принимает человек.</li>
+    </ul>
+    <p class="src">Источники: Роспотребнадзор [11], [12]; ТР ТС 022/2011, ст. 4.9 [13]; NIH ODS [7]</p>
+  </div>
+</section>
+
+<section id="example">
+  <h2>Пример из жизни</h2>
+  <div class="screen case">
+    <p><b>Ольга, 42 года.</b> Осенью чувствует усталость. По совету знакомой купила три добавки: «комплекс для энергии» с железом, мультивитамины и отдельно витамин D в высокой дозе. Параллельно принимает противозачаточные таблетки и чай со зверобоем «для нервов».</p>
+    <p><b>Что не так:</b></p>
+    <ul>
+      <li>Причина усталости не выяснена. Это может быть анемия, щитовидная железа, недосып или что-то ещё.</li>
+      <li>Железо и витамин D могут дублироваться в трёх продуктах сразу, и суммарная доза неизвестна.</li>
+      <li>Зверобой может снижать эффективность противозачаточных таблеток [7].</li>
+    </ul>
+    <p><b>Правильный порядок:</b></p>
+    <ol>
+      <li>Обратиться к терапевту и сдать анализы, которые назначит врач.</li>
+      <li>Взять на приём все упаковки добавок и список лекарств.</li>
+      <li>Пока нет результатов, обычная еда по «тарелке» из модуля 1 и йодированная соль вместо обычной.</li>
+    </ol>
+    <p class="src">Учебный пример, не персональная рекомендация.</p>
+  </div>
+</section>
+
+<section id="ad">
+  <h2>Разбор рекламы</h2>
+  <div class="screen case">
+    <p class="eyebrow">Реальные формулировки из статьи в блоге NL об омега-3, 2026 [14]</p>
+    <p class="quote">«Снижают уровень триглицеридов в крови примерно на 15%»</p>
+    <p class="quote">«Повышают эластичность сосудистых стенок»</p>
+    <p class="quote">«Подавляют синтез провоспалительных цитокинов» (в разделе об иммунитете)</p>
+    <p class="quote">«Восстанавливают липидный барьер кожи», помогают «укреплению волос и ногтей»</p>
+    <div class="verdict">
+      <p><b>Что верно.</b> Снижение триглицеридов примерно на 15% подтверждено Кокрейновским обзором с высокой достоверностью [9].</p>
+      <p><b>Чего в статье нет.</b> По тому же обзору, омега-3 в добавках почти не влияет на смертность и риск инфаркта или инсульта [9]. Снижение анализа не равно снижению риска болезни.</p>
+      <p><b>Механизм вместо результата.</b> «Подавляют цитокины», «повышают эластичность» описывают процессы в организме. По ним нельзя понять, станет ли человек реже болеть. Проверяйте, есть ли исследования с измеримым результатом для людей: реже болели, дольше жили.</p>
+      <p><b>Кожа и волосы.</b> Надёжных обзоров, подтверждающих такой эффект добавок омега-3 у людей без дефицита, мы не нашли. Это не доказывает, что эффекта нет, но и утверждать его нельзя.</p>
+      <p><b>Правовой аспект.</b> В рекламе БАД нельзя создавать впечатление лечебных свойств, ссылаться на случаи излечения и благодарности покупателей. Обязательна пометка «не является лекарственным средством» [3].</p>
+    </div>
+    <p><b>Корректная формулировка для консультации:</b> «Омега-3 — источник полиненасыщенных жиров. Если в рационе мало рыбы, добавка может их восполнить. На риск сердечно-сосудистых болезней в исследованиях она почти не влияет. Если вы принимаете лекарства, обсудите её с врачом».</p>
+  </div>
+</section>
+
+<section id="doctor">
+  <div class="warn">
+    <h2>Когда нужен врач</h2>
+    <ul>
+      <li>Есть жалобы: усталость, бледность, выпадение волос, частые простуды. Сначала нужно выяснить причину, а не подбирать добавки.</li>
+      <li>Человек принимает любые лекарства: возможны взаимодействия [7].</li>
+      <li>Беременность, её планирование, кормление грудью; дети.</li>
+      <li>Хронические болезни (почки, печень, щитовидная железа, ЖКТ).</li>
+      <li>Нужны высокие дозы или приём дольше нескольких месяцев, особенно витаминов A, D и железа.</li>
+    </ul>
+    <p>Консультант по питанию не назначает лечебные дозы и не «лечит» дефициты. Он помогает с рационом и направляет к врачу.</p>
+  </div>
+</section>
+
+<section id="cheat">
+  <h2>Шпаргалка</h2>
+  <div class="cheat">
+    <div class="row"><b>A, D, E, K</b><span>жирорастворимые, накапливаются, избыток опаснее</span></div>
+    <div class="row"><b>Нормы</b><span>D 15 мкг (600 МЕ), йод 150 мкг, железо 18 мг, кальций 1000 мг, B12 3 мкг</span></div>
+    <div class="row"><b>Риски РФ</b><span>витамин D (70–95% ниже оптимума), йод, железо у женщин</span></div>
+    <div class="row"><b>Йод</b><span>йодированная соль вместо обычной, но не больше 5 г соли в день</span></div>
+    <div class="row"><b>Вит. D</b><span>скрининг — группам риска; &gt;4000 МЕ/сут без контроля — нельзя</span></div>
+    <div class="row"><b>БАД</b><span>пищевая продукция, не лекарство; СГР = безопасность, не эффективность</span></div>
+    <div class="row"><b>Данные</b><span>мультивитамины для профилактики — данных мало; бета-каротин и E — против; омега-3: ТГ −15%, на смертность почти не влияет</span></div>
+    <div class="row"><b>Проверка</b><span>реестр fp.crc.ru → маркировка → дозы → лекарства → реклама</span></div>
+    <div class="row"><b>Реклама</b><span>нельзя обещать лечение, приводить случаи излечения и благодарности покупателей</span></div>
+  </div>
+  <p class="src">Совет: сделайте скриншот этого экрана.</p>
+</section>
+
+<section id="cards">
+  <h2>Карточки для повторения</h2>
+  <p class="lead">Нажмите на карточку, чтобы увидеть ответ.</p>
+  <div class="cards">
+    <button class="card" id="card" aria-pressed="false" type="button">
+      <span class="side-a"><span class="hint">Вопрос</span><br><span id="cardQ"></span></span>
+      <span class="side-b"><span class="hint">Ответ</span><br><span id="cardA"></span></span>
+    </button>
+    <div class="cardnav">
+      <button class="btn ghost" id="prevCard" type="button">← Назад</button>
+      <span id="cardPos" class="src"></span>
+      <button class="btn ghost" id="nextCard" type="button">Далее →</button>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>Самопроверка</h2>
+  <p class="lead">5 вопросов. После ответа появится объяснение.</p>
+  <div id="quizBox" style="display:grid;gap:20px"></div>
+  <div class="screen"><p class="score" id="score">Ответов: 0 из 5</p><button class="btn ghost" id="resetQuiz" type="button">Пройти заново</button></div>
+</section>
+
+<section id="task">
+  <h2>Практическое задание · 10–15 минут</h2>
+  <div class="screen">
+    <p><b>Проверьте один БАД по пяти шагам.</b> Подойдёт любой, который есть дома или который вы рекомендуете клиентам.</p>
+    <ol class="steps">
+      <li><span>Найдите на упаковке номер свидетельства о госрегистрации (СГР) и проверьте его в реестре на fp.crc.ru.</span></li>
+      <li><span>Проверьте маркировку: есть ли «не является лекарственным средством», рекомендации по применению, противопоказания.</span></li>
+      <li><span>Выпишите 2–3 главных вещества и их % от суточной нормы в порции. Нет ли дублирования с другими добавками?</span></li>
+      <li><span>Найдите в описании или рекламе продукта одно утверждение о пользе и оцените его: результат для людей или только механизм? Есть ли источник?</span></li>
+      <li><span>Сформулируйте, как бы вы корректно описали этот продукт клиенту, по образцу из разбора рекламы.</span></li>
+    </ol>
+    <p><b>Отметьте, что сделали:</b></p>
+    <div style="display:grid;gap:8px">
+      <label class="check"><input type="checkbox" id="c1"> Проверила СГР в реестре</label>
+      <label class="check"><input type="checkbox" id="c2"> Проверила маркировку</label>
+      <label class="check"><input type="checkbox" id="c3"> Выписала дозы и % от нормы</label>
+      <label class="check"><input type="checkbox" id="c4"> Оценила одно рекламное утверждение</label>
+      <label class="check"><input type="checkbox" id="c5"> Написала корректную формулировку</label>
+    </div>
+    <p class="src">Если реестр не открывается, попробуйте позже или с компьютера: сайт иногда работает нестабильно.</p>
+  </div>
+</section>
+
+<section id="sources" class="sources">
+  <h2>Источники</h2>
+  <ol>
+    <li>МР 2.3.1.0253-21 «Нормы физиологических потребностей в энергии и пищевых веществах для различных групп населения РФ». Роспотребнадзор, 2021. <a href="https://sudact.ru/law/mr-2310253-21-231-gigiena-gigiena-pitaniia-ratsionalnoe/" target="_blank" rel="noopener">sudact.ru</a></li>
+    <li>ТР ТС 021/2011 «О безопасности пищевой продукции», статья 4. <a href="https://www.novotest.ru/tr-ts/021-2011/st-4/" target="_blank" rel="noopener">Текст статьи</a></li>
+    <li>Федеральный закон № 38-ФЗ «О рекламе», статья 25. <a href="https://www.zakonrf.info/zoreklame/25/" target="_blank" rel="noopener">zakonrf.info</a> · <a href="https://www.consultant.ru/document/cons_doc_LAW_58968/6147d77ef3ebff43fadce8d43d23f5e36cd7aa20/" target="_blank" rel="noopener">КонсультантПлюс</a></li>
+    <li>Российская ассоциация эндокринологов. Клинические рекомендации «Дефицит витамина D», 2021. <a href="https://www.endocrincentr.ru/sites/default/files/specialists/science/clinic-recomendations/d_2021.pdf" target="_blank" rel="noopener">PDF, НМИЦ эндокринологии</a></li>
+    <li>Linus Pauling Institute. Iodine (нормы США и ВОЗ). <a href="https://lpi.oregonstate.edu/mic/minerals/iodine" target="_blank" rel="noopener">lpi.oregonstate.edu</a></li>
+    <li>«Коммерсантъ». Минздрав хочет обязать использовать йодированную соль, 27.06.2024. <a href="https://www.kommersant.ru/doc/6792063" target="_blank" rel="noopener">kommersant.ru</a></li>
+    <li>NIH Office of Dietary Supplements. Dietary Supplements: What You Need to Know, 2023. <a href="https://ods.od.nih.gov/factsheets/WYNTK-Consumer/" target="_blank" rel="noopener">ods.od.nih.gov</a> · <a href="https://ods.od.nih.gov/factsheets/list-VitaminsMinerals/" target="_blank" rel="noopener">справки по витаминам и минералам</a></li>
+    <li>ВОЗ. Healthy diet, 2026. <a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener">who.int</a></li>
+    <li>Abdelhamid A.S. и соавт. Omega-3 fatty acids for the primary and secondary prevention of cardiovascular disease. Cochrane, 2020. <a href="https://www.cochrane.org/evidence/CD003177_omega-3-intake-cardiovascular-disease" target="_blank" rel="noopener">cochrane.org</a></li>
+    <li>USPSTF. Vitamin, Mineral, and Multivitamin Supplementation to Prevent CVD and Cancer, 2022. <a href="https://www.aafp.org/pubs/afp/issues/2022/1100/uspstf-supplementation-cardiovascular-disease-cancer.html" target="_blank" rel="noopener">aafp.org</a></li>
+    <li>Роспотребнадзор. Реестр свидетельств о государственной регистрации. <a href="http://fp.crc.ru/evrazes/?type=max" target="_blank" rel="noopener">fp.crc.ru</a> · <a href="https://eec.eaeunion.org/comission/department/depsanmer/reestry.php" target="_blank" rel="noopener">реестры ЕЭК</a></li>
+    <li>ФБУЗ «Центр гигиенического образования населения» Роспотребнадзора. О маркировке БАД. <a href="https://cgon.rospotrebnadzor.ru/bady/o-markirovke-biologicheski-aktivnykh-dobavok-k-pishche/" target="_blank" rel="noopener">cgon.rospotrebnadzor.ru</a></li>
+    <li>ТР ТС 022/2011 «Пищевая продукция в части её маркировки», ст. 4.9, п. 10. <a href="https://eec.eaeunion.org/upload/medialibrary/9db/TrTsPishevkaMarkirovka.pdf" target="_blank" rel="noopener">PDF, ЕЭК</a></li>
+    <li>Блог NL: «Омега-3 — для чего принимают», 2026 (учебный пример формулировок). <a href="https://blog.nlstar.com/health/polza-omega-3-dlya-organizma/" target="_blank" rel="noopener">blog.nlstar.com</a></li>
+  </ol>
+  <p class="src">Проверено 30.09.2026. Продукты-источники микронутриентов приведены по справкам NIH ODS [7] как типичные примеры.</p>
+</section>
+
+<footer>
+  <a href="index.html" style="color:var(--accent)">← Оглавление курса</a>
+  <span>Следующий модуль: Клетчатка, микробиота и питьевой режим</span>
+  <span>Материал образовательный и не заменяет консультацию врача.</span>
+</footer>
+</div>
+
+<script>
+(function(){
+  var cards=[
+    ["Какие витамины жирорастворимые и чем это важно?","A, D, E, K. Они накапливаются в организме, поэтому их избыток опаснее."],
+    ["Норма витамина D для взрослых по МР 2021?","15 мкг, это 600 МЕ в сутки; старше 65 лет — 20 мкг (800 МЕ)."],
+    ["Какие три микронутриента чаще всего в зоне риска в России?","Витамин D, йод и железо (у женщин детородного возраста)."],
+    ["Главный способ профилактики йододефицита для семьи?","Йодированная соль вместо обычной, без увеличения общего количества соли."],
+    ["Что такое БАД по ТР ТС 021/2011?","Природные или идентичные природным биологически активные вещества и пробиотики для употребления с пищей. Это пищевая продукция, не лекарство."],
+    ["Что подтверждает свидетельство о госрегистрации (СГР)?","Безопасность и соответствие состава. Эффективность оно не доказывает."],
+    ["Что запрещено в рекламе БАД (38-ФЗ, ст. 25)?","Создавать впечатление лекарства или лечебных свойств, приводить случаи излечения, благодарности, побуждать отказаться от здорового питания, ссылаться на регистрационные исследования."],
+    ["Что показал Кокрейн-обзор 2020 по омега-3?","Триглицериды снижаются примерно на 15%, но на смертность и сердечно-сосудистые события влияние мало или отсутствует."]
+  ];
+  var i=0, card=document.getElementById('card');
+  function showCard(){document.getElementById('cardQ').textContent=cards[i][0];document.getElementById('cardA').textContent=cards[i][1];card.setAttribute('aria-pressed','false');document.getElementById('cardPos').textContent=(i+1)+' / '+cards.length;}
+  card.addEventListener('click',function(){card.setAttribute('aria-pressed',card.getAttribute('aria-pressed')==='true'?'false':'true');});
+  document.getElementById('nextCard').addEventListener('click',function(){i=(i+1)%cards.length;showCard();});
+  document.getElementById('prevCard').addEventListener('click',function(){i=(i-1+cards.length)%cards.length;showCard();});
+  showCard();
+
+  var qs=[
+    {q:"Клиентка жалуется на усталость и просит «что-нибудь с железом». Что правильно?",o:["Подобрать комплекс с железом","Порекомендовать обратиться к врачу и сдать анализы: причин усталости много, а избыток железа вреден","Посоветовать двойную дозу витаминов"],a:1,e:"Усталость бывает из-за анемии, щитовидной железы, недосыпа и других причин. Избыток железа вызывает тошноту и может повредить печень (NIH ODS). Причину выясняет врач."},
+    {q:"Что подтверждает свидетельство о госрегистрации БАД?",o:["Что БАД лечит заявленные болезни","Безопасность и соответствие состава, но не эффективность","Что БАД одобрен Минздравом как лекарство"],a:1,e:"БАД — пищевая продукция (ТР ТС 021/2011). Закон «О рекламе» (ст. 25) запрещает использовать регистрационные исследования как довод о преимуществах."},
+    {q:"Почему избыток витаминов A и D опаснее, чем витамина C?",o:["Они жирорастворимые и накапливаются в организме","Они дороже","Они синтетические"],a:0,e:"Жирорастворимые витамины (A, D, E, K) накапливаются. Избыток витамина A повреждает печень и опасен для плода, избыток витамина D повышает уровень кальция в крови."},
+    {q:"Что показал Кокрейн-обзор 2020 по добавкам омега-3?",o:["Снижают смертность от инфаркта вдвое","Снижают триглицериды примерно на 15%, на смертность и сердечно-сосудистые события почти не влияют","Не дают никакого эффекта"],a:1,e:"86 исследований, более 160 000 участников, высокая достоверность. Изменение анализа не означает снижения риска болезни."},
+    {q:"Какая фраза допустима в рекламе БАД по закону?",o:["«Вылечила гастрит за месяц — спасибо продукту!»","«Не является лекарственным средством»","«Заменяет лекарства от давления»"],a:1,e:"Статья 25 ФЗ «О рекламе» запрещает впечатление лечебных свойств, случаи излечения и благодарности и требует предупреждения «не является лекарственным средством»."}
+  ];
+  var box=document.getElementById('quizBox'), answered=0, correct=0;
+  function renderQuiz(){
+    box.innerHTML='';answered=0;correct=0;updateScore();
+    qs.forEach(function(item,qi){
+      var w=document.createElement('div');w.className='screen q';
+      var h=document.createElement('h3');h.textContent=(qi+1)+'. '+item.q;w.appendChild(h);
+      var opts=document.createElement('div');opts.className='opts';
+      var ex=document.createElement('p');ex.className='expl';ex.hidden=true;
+      item.o.forEach(function(t,oi){
+        var b=document.createElement('button');b.type='button';b.className='opt';b.id='q'+qi+'o'+oi;b.textContent=t;
+        b.addEventListener('click',function(){
+          var all=opts.querySelectorAll('.opt');all.forEach(function(x){x.disabled=true;});
+          all[item.a].classList.add('right');
+          var ok=oi===item.a;if(!ok)b.classList.add('wrong');
+          answered++;if(ok)correct++;updateScore();
+          ex.innerHTML='';var v=document.createElement('b');v.className=ok?'ok':'no';v.textContent=ok?'Верно. ':'Не совсем. ';ex.appendChild(v);ex.appendChild(document.createTextNode(item.e));ex.hidden=false;
+        });
+        opts.appendChild(b);
+      });
+      w.appendChild(opts);w.appendChild(ex);box.appendChild(w);
+    });
+  }
+  function updateScore(){document.getElementById('score').textContent=answered<qs.length?('Ответов: '+answered+' из '+qs.length):('Результат: '+correct+' из '+qs.length+(correct>=4?' — отлично':' — перечитайте шпаргалку'));}
+  document.getElementById('resetQuiz').addEventListener('click',renderQuiz);
+  renderQuiz();
+  ['c1','c2','c3','c4','c5'].forEach(function(id){
+    var el=document.getElementById(id);
+    try{el.checked=localStorage.getItem('m2-'+id)==='1';}catch(e){}
+    el.addEventListener('change',function(){try{localStorage.setItem('m2-'+id,el.checked?'1':'0');}catch(e){}});
+  });
+})();
+</script>
+
+</body>
+</html>
