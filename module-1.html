@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Модуль 1. Энергия и макронутриенты</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: одна колонка для телефона; липкая навигация-чипы; экраны-карточки «одна мысль» */
+:root{
+  --bg:#F2F5F1; --surface:#FFFFFF; --ink:#1C2923; --muted:#56655D; --line:#D7E0D9;
+  --accent:#2E6A4E; --accent-soft:#E1EEE6;
+  --prot:#A8435A; --fat:#C08A12; --carb:#3F74A8; --veg:#4E8A3A;
+  --warn-bg:#FFF4E0; --warn-ink:#6E4A00; --bad:#A33A2A; --good:#2E6A4E;
+  --f-display:"Unbounded", "Golos Text", system-ui, sans-serif;
+  --f-body:"Golos Text", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121A16; --surface:#1B2620; --ink:#E6EEE8; --muted:#A3B3A9; --line:#2E3D35;
+  --accent:#7CC6A0; --accent-soft:#223A2E;
+  --prot:#E08398; --fat:#E4B54A; --carb:#86B2DD; --veg:#8CC474;
+  --warn-bg:#3A2E14; --warn-ink:#F2D28C; --bad:#EE8B7B; --good:#7CC6A0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121A16; --surface:#1B2620; --ink:#E6EEE8; --muted:#A3B3A9; --line:#2E3D35;
+  --accent:#7CC6A0; --accent-soft:#223A2E;
+  --prot:#E08398; --fat:#E4B54A; --carb:#86B2DD; --veg:#8CC474;
+  --warn-bg:#3A2E14; --warn-ink:#F2D28C; --bad:#EE8B7B; --good:#7CC6A0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.55;-webkit-text-size-adjust:100%}
+.wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:8px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.55rem;font-weight:700}
+h2{font-size:1.2rem;font-weight:700;color:var(--accent)}
+h3{font-size:1.02rem;font-weight:500}
+p{margin:0}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+header.top{padding-block:20px 12px;display:grid;gap:10px}
+.lead{color:var(--muted)}
+nav.chips{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-inline:-16px;padding:8px 16px;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+nav.chips::-webkit-scrollbar{display:none}
+nav.chips a{display:inline-block;padding:6px 12px;margin-right:6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:.85rem}
+nav.chips a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section{scroll-margin-top:64px;padding-block:22px 6px;display:grid;gap:14px}
+.screen{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 16px;display:grid;gap:10px;min-width:0}
+.screen .n{font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.06em}
+.goal{background:var(--accent-soft);border-radius:14px;padding:16px;display:grid;gap:8px}
+.goal ul,.screen ul,.screen ol{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.num{font-variant-numeric:tabular-nums;font-weight:700}
+.term{font-weight:600;border-bottom:1px dashed var(--muted)}
+.src{font-size:.8rem;color:var(--muted)}
+.src a{color:var(--muted)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:baseline}
+.kv dt{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kv dd{margin:0;min-width:0}
+.dot{display:inline-block;width:.7em;height:.7em;border-radius:50%;margin-right:6px;vertical-align:baseline}
+.warn{background:var(--warn-bg);color:var(--warn-ink);border-radius:14px;padding:16px;display:grid;gap:8px}
+.warn h2{color:var(--warn-ink)}
+figure{margin:0;display:grid;gap:8px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted)}
+svg text{font-family:var(--f-body)}
+.case{display:grid;gap:10px}
+.quote{border-left:3px solid var(--fat);padding-left:12px;font-style:italic}
+.verdict{display:grid;gap:4px}
+.verdict b{color:var(--accent)}
+/* шпаргалка */
+.cheat{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:16px;display:grid;gap:10px}
+.cheat .row{display:grid;grid-template-columns:5.2em 1fr;gap:10px;align-items:baseline;border-top:1px solid var(--line);padding-top:8px}
+.cheat .row:first-of-type{border-top:0;padding-top:0}
+.cheat .row b{font-variant-numeric:tabular-nums}
+/* карточки */
+.cards{display:grid;gap:10px}
+.card{position:relative;min-height:128px;border-radius:14px;border:1px solid var(--line);background:var(--surface);padding:16px;text-align:left;font:inherit;color:inherit;cursor:pointer;display:grid;align-content:center;gap:6px}
+.card .side-b{display:none}
+.card[aria-pressed="true"]{background:var(--accent-soft)}
+.card[aria-pressed="true"] .side-a{display:none}
+.card[aria-pressed="true"] .side-b{display:block}
+.card .hint{font-size:.78rem;color:var(--muted)}
+.card:focus-visible,.opt:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cardnav{display:flex;gap:8px;align-items:center;justify-content:space-between}
+/* тест */
+.q{display:grid;gap:10px}
+.opts{display:grid;gap:8px}
+.opt{font:inherit;color:inherit;text-align:left;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.opt.right{border-color:var(--good);background:var(--accent-soft)}
+.opt.wrong{border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.expl{font-size:.95rem;border-radius:10px;padding:10px 12px;background:var(--bg)}
+.expl b.ok{color:var(--good)} .expl b.no{color:var(--bad)}
+.score{font-weight:700}
+.btn{font:inherit;font-weight:600;padding:10px 16px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:var(--surface);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+/* практика */
+.steps{counter-reset:s;display:grid;gap:10px;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;display:grid;grid-template-columns:2em 1fr;gap:8px}
+.steps li::before{content:counter(s);font-family:var(--f-display);font-weight:700;color:var(--accent)}
+.check{display:flex;gap:10px;align-items:flex-start}
+.check input{width:22px;height:22px;margin-top:3px;accent-color:var(--accent);flex:none}
+.sources ol{padding-left:1.2em;display:grid;gap:10px;margin:0;font-size:.92rem}
+.sources a{color:var(--accent);word-break:break-word}
+footer{padding-block:28px 0;color:var(--muted);font-size:.85rem;display:grid;gap:6px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <span class="eyebrow">Основы питания · Модуль 1 из 8 · ~25 минут</span>
+  <h1>Энергия и макронутриенты</h1>
+  <p class="lead">Откуда организм берёт энергию, сколько её нужно и зачем нам белки, жиры и углеводы.</p>
+</header>
+
+<nav class="chips" aria-label="Разделы модуля">
+  <a href="#goal">Цель</a><a href="#energy">Энергия</a><a href="#macro">Макронутриенты</a><a href="#plate">Тарелка</a><a href="#example">Пример</a><a href="#ad">Разбор рекламы</a><a href="#doctor">Когда к врачу</a><a href="#cheat">Шпаргалка</a><a href="#cards">Карточки</a><a href="#quiz">Тест</a><a href="#task">Задание</a><a href="#sources">Источники</a>
+</nav>
+
+<section id="goal">
+  <div class="goal">
+    <h2>После модуля вы сможете</h2>
+    <ul>
+      <li>объяснить, что такое калории и откуда они берутся;</li>
+      <li>понять, как оценивают суточную потребность в энергии;</li>
+      <li>назвать роль и ориентиры для белков, жиров и углеводов;</li>
+      <li>оценить приём пищи по принципу «тарелки» без подсчёта калорий;</li>
+      <li>разобрать рекламное обещание о похудении с точки зрения энергобаланса.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="energy">
+  <h2>Энергия</h2>
+
+  <div class="screen">
+    <span class="n">1 / 3</span>
+    <h3>Калория — единица энергии</h3>
+    <p>На упаковках и в таблицах пишут <span class="term">ккал</span> — килокалории. Это количество энергии, которую организм может получить из продукта.</p>
+    <p>Энергию дают только несколько веществ. Коэффициенты закреплены в техническом регламенте, по ним рассчитывают калорийность на этикетке:</p>
+    <dl class="kv">
+      <dt><span class="dot" style="background:var(--prot)"></span>Белки</dt><dd>4 ккал в 1 г</dd>
+      <dt><span class="dot" style="background:var(--fat)"></span>Жиры</dt><dd>9 ккал в 1 г</dd>
+      <dt><span class="dot" style="background:var(--carb)"></span>Углеводы</dt><dd>4 ккал в 1 г</dd>
+      <dt>Пищевые волокна</dt><dd>2 ккал в 1 г</dd>
+      <dt>Алкоголь</dt><dd>7 ккал в 1 г</dd>
+    </dl>
+    <p>Вода, витамины и минералы энергии не дают, но без них организм не работает.</p>
+    <p class="src">Источник: ТР ТС 022/2011, приложение 4 [3]</p>
+  </div>
+
+  <div class="screen">
+    <span class="n">2 / 3</span>
+    <h3>Сколько энергии нужно</h3>
+    <p><span class="term">Основной обмен</span> — минимум энергии на жизнь в покое: дыхание, сердце, мозг, температура тела. У женщин 30–44 лет это около <span class="num">1270–1340 ккал</span> в сутки.</p>
+    <p><span class="term">КФА</span> (коэффициент физической активности) показывает, во сколько раз активность увеличивает траты:</p>
+    <dl class="kv">
+      <dt>1,4</dt><dd>умственный труд, сидячая работа</dd>
+      <dt>1,6</dt><dd>лёгкий физический труд</dd>
+      <dt>1,9</dt><dd>труд средней тяжести</dd>
+      <dt>2,2</dt><dd>тяжёлый физический труд</dd>
+    </dl>
+    <p><b>Суточная потребность ≈ основной обмен × КФА.</b><br>Пример: 1300 × 1,4 ≈ 1820 ккал.</p>
+    <p>Это ориентир для групп населения, а не точный расчёт для конкретного человека.</p>
+    <p class="src">Источник: МР 2.3.1.0253-21 [1]</p>
+  </div>
+
+  <figure class="screen" aria-labelledby="fig1cap">
+    <svg viewBox="0 0 340 360" role="img" aria-label="Схема энергетического баланса">
+      <rect x="10" y="8" width="320" height="74" rx="12" fill="var(--accent-soft)" stroke="var(--line)"/>
+      <text x="170" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">ПРИХОД</text>
+      <text x="170" y="56" text-anchor="middle" font-size="13" fill="var(--ink)">еда и напитки: белки, жиры,</text>
+      <text x="170" y="73" text-anchor="middle" font-size="13" fill="var(--ink)">углеводы, волокна, алкоголь</text>
+      <path d="M170 86 L170 112" stroke="var(--muted)" stroke-width="2" fill="none"/>
+      <path d="M163 104 L170 116 L177 104 Z" fill="var(--muted)"/>
+      <rect x="10" y="120" width="320" height="74" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+      <text x="170" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">РАСХОД</text>
+      <text x="170" y="168" text-anchor="middle" font-size="13" fill="var(--ink)">основной обмен × КФА</text>
+      <text x="170" y="185" text-anchor="middle" font-size="12" fill="var(--muted)">(жизнь в покое × активность)</text>
+      <text x="170" y="222" text-anchor="middle" font-size="13" font-weight="600" fill="var(--muted)">Что происходит с весом со временем</text>
+      <g font-size="12" text-anchor="middle">
+        <rect x="10" y="236" width="100" height="110" rx="10" fill="var(--surface)" stroke="var(--line)"/>
+        <text x="60" y="266" font-size="22" font-weight="700" fill="var(--bad)">↑</text>
+        <text x="60" y="290" fill="var(--ink)">приход</text>
+        <text x="60" y="306" fill="var(--ink)">больше</text>
+        <text x="60" y="322" fill="var(--ink)">расхода</text>
+        <rect x="120" y="236" width="100" height="110" rx="10" fill="var(--surface)" stroke="var(--line)"/>
+        <text x="170" y="266" font-size="22" font-weight="700" fill="var(--accent)">=</text>
+        <text x="170" y="290" fill="var(--ink)">приход</text>
+        <text x="170" y="306" fill="var(--ink)">равен</text>
+        <text x="170" y="322" fill="var(--ink)">расходу</text>
+        <rect x="230" y="236" width="100" height="110" rx="10" fill="var(--surface)" stroke="var(--line)"/>
+        <text x="280" y="266" font-size="22" font-weight="700" fill="var(--carb)">↓</text>
+        <text x="280" y="290" fill="var(--ink)">приход</text>
+        <text x="280" y="306" fill="var(--ink)">меньше</text>
+        <text x="280" y="322" fill="var(--ink)">расхода</text>
+      </g>
+    </svg>
+    <figcaption id="fig1cap">Схема 1. Энергетический баланс. Вес меняется постепенно: организм подстраивает траты под новый рацион.</figcaption>
+  </figure>
+
+  <div class="screen">
+    <span class="n">3 / 3</span>
+    <h3>Почему «7700 ккал = минус 1 кг» не работает</h3>
+    <p>Популярное правило считает, что каждые 7700 ккал дефицита дают минус 1 кг. Исследования показывают, что оно <b>завышает прогноз примерно вдвое</b>: при снижении веса уменьшаются и траты организма.</p>
+    <p>По модели для взрослых:</p>
+    <ul>
+      <li>стойкое изменение рациона на ~24 ккал (100 кДж) в сутки со временем меняет вес примерно на 1 кг;</li>
+      <li>половина итогового изменения набирается примерно за год, почти всё (95%) — за ~3 года.</li>
+    </ul>
+    <p>Вывод для практики: быстрые обещания («минус 5 кг за неделю») не согласуются с тем, как меняется масса тела.</p>
+    <p class="src">Источники: Hall и соавт., 2011 [4]; Thomas и соавт., 2013 [5]; ВОЗ [2]</p>
+  </div>
+</section>
+
+<section id="macro">
+  <h2>Макронутриенты</h2>
+  <p>Макронутриенты — вещества, которые нужны в граммах: белки, жиры, углеводы. Микронутриенты (витамины и минералы) нужны в милли- и микрограммах, о них модуль 2.</p>
+
+  <figure class="screen" aria-labelledby="fig2cap">
+    <svg viewBox="0 0 340 170" role="img" aria-label="Доли макронутриентов в калорийности рациона по МР 2.3.1.0253-21">
+      <rect x="10" y="20" width="44" height="44" fill="var(--prot)"/>
+      <rect x="54" y="20" width="96" height="44" fill="var(--fat)"/>
+      <rect x="150" y="20" width="180" height="44" fill="var(--carb)"/>
+      <text x="32" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="var(--surface)">Б</text>
+      <text x="102" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="var(--surface)">Ж</text>
+      <text x="240" y="48" text-anchor="middle" font-size="12" font-weight="700" fill="var(--surface)">У</text>
+      <g font-size="13" fill="var(--ink)">
+        <circle cx="18" cy="96" r="6" fill="var(--prot)"/><text x="32" y="101">Белки — 12–14% калорийности</text>
+        <circle cx="18" cy="122" r="6" fill="var(--fat)"/><text x="32" y="127">Жиры — около 30%</text>
+        <circle cx="18" cy="148" r="6" fill="var(--carb)"/><text x="32" y="153">Углеводы — 56–58%</text>
+      </g>
+    </svg>
+    <figcaption id="fig2cap">Схема 2. Ориентировочные доли энергии из макронутриентов для взрослых (МР 2.3.1.0253-21 [1]). Масштаб полосы: 100% калорийности.</figcaption>
+  </figure>
+
+  <div class="screen">
+    <h3><span class="dot" style="background:var(--prot)"></span>Белки</h3>
+    <p>Строительный материал тканей, основа ферментов и многих гормонов. Белки состоят из <span class="term">аминокислот</span>; девять из них организм не синтезирует сам, их называют незаменимыми.</p>
+    <dl class="kv">
+      <dt>12–14%</dt><dd>калорийности рациона</dd>
+      <dt>60–90 г</dt><dd>в сутки для женщин (по нормам РФ)</dd>
+      <dt>0,83 г/кг</dt><dd>массы тела — безопасный уровень по ВОЗ</dd>
+      <dt>~50%</dt><dd>белка — животного происхождения</dd>
+    </dl>
+    <p>Источники: мясо, птица, рыба, яйца, творог, сыр, бобовые (фасоль, чечевица, горох), орехи.</p>
+    <p class="src">Источники: МР 2.3.1.0253-21 [1]; ВОЗ, TRS 935 [6]</p>
+  </div>
+
+  <div class="screen">
+    <h3><span class="dot" style="background:var(--fat)"></span>Жиры</h3>
+    <p>Самый калорийный макронутриент. Важен не только объём, но и тип жиров.</p>
+    <dl class="kv">
+      <dt>≤30%</dt><dd>калорийности — все жиры</dd>
+      <dt>≤10%</dt><dd>насыщенные жиры (сливочное масло, сало, жирное мясо, сыр, пальмовое и кокосовое масло)</dd>
+      <dt>≤1%</dt><dd>трансжиры (частично гидрогенизированные жиры в выпечке и фастфуде)</dd>
+      <dt>6–10%</dt><dd>полиненасыщенные жиры, в т. ч. омега-3 1–2% (растительные масла, рыба, орехи, семена)</dd>
+    </dl>
+    <p class="src">Источники: ВОЗ [2]; МР 2.3.1.0253-21 [1]</p>
+  </div>
+
+  <div class="screen">
+    <h3><span class="dot" style="background:var(--carb)"></span>Углеводы</h3>
+    <p>Основной источник энергии в рационе. Сюда входят крахмал (крупы, хлеб, картофель), сахара и пищевые волокна.</p>
+    <dl class="kv">
+      <dt>56–58%</dt><dd>калорийности рациона</dd>
+      <dt>&lt;10%</dt><dd>добавленный сахар; при 2000 ккал это ≈ 50 г, около 12 чайных ложек</dd>
+      <dt>≤5%</dt><dd>добавленный сахар при избыточной массе тела (рекомендация РФ)</dd>
+      <dt>20–25 г</dt><dd>пищевых волокон в сутки (РФ); ВОЗ — не менее 25 г</dd>
+    </dl>
+    <p><span class="term">Добавленный сахар</span> — сахар, мёд, сиропы, которые добавляют в еду и напитки. Сахар в цельных фруктах и молоке сюда не входит.</p>
+    <p class="src">Источники: МР 2.3.1.0253-21 [1]; ВОЗ [2]</p>
+  </div>
+</section>
+
+<section id="plate">
+  <h2>Тарелка вместо калькулятора</h2>
+  <figure class="screen" aria-labelledby="fig3cap">
+    <svg viewBox="0 0 340 250" role="img" aria-label="Модель тарелки: половина овощи и фрукты, четверть цельные злаки, четверть белковые продукты">
+      <circle cx="120" cy="120" r="104" fill="var(--surface)" stroke="var(--line)" stroke-width="6"/>
+      <path d="M120 120 L120 20 A100 100 0 0 0 120 220 Z" fill="var(--veg)"/>
+      <path d="M120 120 L120 20 A100 100 0 0 1 220 120 Z" fill="var(--carb)"/>
+      <path d="M120 120 L220 120 A100 100 0 0 1 120 220 Z" fill="var(--prot)"/>
+      <text x="72" y="125" text-anchor="middle" font-size="16" font-weight="700" fill="var(--surface)">½</text>
+      <text x="158" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="var(--surface)">¼</text>
+      <text x="158" y="166" text-anchor="middle" font-size="16" font-weight="700" fill="var(--surface)">¼</text>
+      <g font-size="13" fill="var(--ink)">
+        <circle cx="240" cy="60" r="6" fill="var(--veg)"/><text x="252" y="65">овощи,</text><text x="252" y="81">фрукты</text>
+        <circle cx="240" cy="120" r="6" fill="var(--carb)"/><text x="252" y="125">цельные</text><text x="252" y="141">злаки</text>
+        <circle cx="240" cy="180" r="6" fill="var(--prot)"/><text x="252" y="185">белковые</text><text x="252" y="201">продукты</text>
+      </g>
+    </svg>
+    <figcaption id="fig3cap">Схема 3. Модель «тарелки здорового питания» (Гарвардская школа общественного здравоохранения [7]). Это наглядный ориентир, а не норма.</figcaption>
+  </figure>
+  <div class="screen">
+    <ul>
+      <li><b>½ тарелки</b> — овощи и фрукты, разные по цвету. Картофель и картофель фри в эту часть не входят.</li>
+      <li><b>¼</b> — цельные злаки: гречка, овсянка, бурый рис, перловка, цельнозерновой хлеб.</li>
+      <li><b>¼</b> — белок: рыба, птица, бобовые, яйца, творог. Красное мясо реже, колбасы и сосиски — ограничить.</li>
+      <li>Масло — растительное, в разумном количестве. Пить — воду, чай, кофе без сахара или почти без него.</li>
+    </ul>
+    <p>ВОЗ рекомендует не менее <span class="num">400 г</span> овощей и фруктов в день; тарелка помогает до этого дойти.</p>
+    <p class="src">Источники: Harvard Healthy Eating Plate [7]; ВОЗ [2]</p>
+  </div>
+</section>
+
+<section id="example">
+  <h2>Пример из жизни</h2>
+  <div class="screen case">
+    <p><b>Ирина, 38 лет, офис, КФА ≈ 1,4.</b> Обычный будний день:</p>
+    <ul>
+      <li>Завтрак: кофе с сахаром, два печенья.</li>
+      <li>Обед в столовой: макароны с сосиской, компот.</li>
+      <li>Перекус: сладкий йогурт.</li>
+      <li>Ужин: жареная картошка, салат из огурцов и помидоров, чай с конфетой.</li>
+    </ul>
+    <p><b>Разбор по тарелке (без подсчёта калорий):</b></p>
+    <ul>
+      <li>Овощей и фруктов мало: один салат за день — далеко от 400 г.</li>
+      <li>Белка мало, и он в основном из переработанного мяса (сосиска).</li>
+      <li>Цельных злаков нет; добавленный сахар — в кофе, печенье, компоте, йогурте, конфете.</li>
+    </ul>
+    <p><b>Три посильные замены:</b></p>
+    <ol>
+      <li>Завтрак: овсянка с яблоком или творог с ягодами вместо печенья.</li>
+      <li>Обед: гречка с курицей или рыбой и порция овощей вместо макарон с сосиской.</li>
+      <li>Перекус: натуральный йогурт и фрукт вместо сладкого йогурта.</li>
+    </ol>
+    <p class="src">Это учебный пример, а не персональная рекомендация.</p>
+  </div>
+</section>
+
+<section id="ad">
+  <h2>Разбор рекламы</h2>
+  <div class="screen case">
+    <p class="eyebrow">Реальные формулировки с лендинга коктейлей Energy Diet (NL) [8]</p>
+    <p class="quote">«Купи Energy Diet и похудей за неделю!»</p>
+    <p class="quote">«Всего 200 калорий в порции!»</p>
+    <p class="quote">«−20 кг за 3 месяца» (отзыв покупателя)</p>
+    <div class="verdict">
+      <p><b>Механизм.</b> Если порция на 200 ккал заменяет обычный обед на 600–700 ккал, возникает дефицит энергии. Работает именно дефицит, а не особое свойство продукта. Тот же эффект даст любая замена, которая снижает приход.</p>
+      <p><b>Что говорят исследования.</b> Обзор 23 рандомизированных исследований: программы с заменителями пищи дали за год в среднем на 1,4–6 кг больше снижения веса, чем сравниваемые диеты. Результат лучше при поддержке специалиста [9]. Это рабочий инструмент, но не волшебство.</p>
+      <p><b>«За неделю».</b> Масса тела меняется месяцами; обещание срока противоречит данным [4].</p>
+      <p><b>Отзывы «−20 кг».</b> Отдельная история не доказывает эффект: мы не знаем, что ещё менял человек и сколько людей не получили результата. Подробнее об уровнях доказательности — в модуле 5.</p>
+    </div>
+    <p><b>Корректная формулировка для консультации:</b> «Коктейль может помочь контролировать калорийность одного приёма пищи. Итог зависит от всего рациона и активности».</p>
+  </div>
+</section>
+
+<section id="doctor">
+  <div class="warn">
+    <h2>Когда нужен врач, а не самостоятельные изменения</h2>
+    <ul>
+      <li>Вес снижается без изменения питания и активности, особенно если есть другие симптомы [10].</li>
+      <li>Есть хроническое заболевание (например, диабет, болезни почек, желудка, щитовидной железы) — питание подбирает врач.</li>
+      <li>Беременность и грудное вскармливание, детский и подростковый возраст.</li>
+      <li>Нужно заметно снизить вес при ожирении — это задача врача (терапевта, эндокринолога, диетолога).</li>
+    </ul>
+    <p>Курс образовательный: он не ставит диагнозы и не заменяет консультацию специалиста.</p>
+  </div>
+</section>
+
+<section id="cheat">
+  <h2>Шпаргалка</h2>
+  <div class="cheat">
+    <div class="row"><b>4 / 9 / 4</b><span>ккал в 1 г белков / жиров / углеводов; алкоголь — 7</span></div>
+    <div class="row"><b>ВОО × КФА</b><span>оценка суточной потребности; КФА 1,4 при сидячей работе</span></div>
+    <div class="row"><b>Баланс</b><span>вес меняется медленно; «7700 ккал = 1 кг» завышает прогноз</span></div>
+    <div class="row"><b>Белки</b><span>12–14% калорийности; женщинам 60–90 г/сут</span></div>
+    <div class="row"><b>Жиры</b><span>≤30%; насыщенные ≤10%; трансжиры ≤1%</span></div>
+    <div class="row"><b>Углеводы</b><span>56–58%; добавленный сахар &lt;10% (≈50 г при 2000 ккал)</span></div>
+    <div class="row"><b>Волокна</b><span>20–25 г/сут (РФ), ≥25 г (ВОЗ)</span></div>
+    <div class="row"><b>Тарелка</b><span>½ овощи и фрукты, ¼ цельные злаки, ¼ белок; ≥400 г овощей и фруктов</span></div>
+    <div class="row"><b>К врачу</b><span>потеря веса без причины, хронические болезни, беременность, дети</span></div>
+  </div>
+  <p class="src">Совет: сделайте скриншот этого экрана.</p>
+</section>
+
+<section id="cards">
+  <h2>Карточки для повторения</h2>
+  <p class="lead">Нажмите на карточку, чтобы увидеть ответ.</p>
+  <div class="cards">
+    <button class="card" id="card" aria-pressed="false" type="button">
+      <span class="side-a"><span class="hint">Вопрос</span><br><span id="cardQ"></span></span>
+      <span class="side-b"><span class="hint">Ответ</span><br><span id="cardA"></span></span>
+    </button>
+    <div class="cardnav">
+      <button class="btn ghost" id="prevCard" type="button">← Назад</button>
+      <span id="cardPos" class="src"></span>
+      <button class="btn ghost" id="nextCard" type="button">Далее →</button>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>Самопроверка</h2>
+  <p class="lead">5 вопросов. После ответа появится объяснение.</p>
+  <div id="quizBox" style="display:grid;gap:20px"></div>
+  <div class="screen"><p class="score" id="score">Ответов: 0 из 5</p><button class="btn ghost" id="resetQuiz" type="button">Пройти заново</button></div>
+</section>
+
+<section id="task">
+  <h2>Практическое задание · 10–15 минут</h2>
+  <div class="screen">
+    <p><b>Разберите свой вчерашний день по принципу тарелки.</b> Калории считать не нужно.</p>
+    <ol class="steps">
+      <li><span>Запишите всё, что ели и пили вчера, включая перекусы и напитки.</span></li>
+      <li><span>Для каждого приёма пищи отметьте: были ли овощи или фрукты, белковый продукт, цельные злаки.</span></li>
+      <li><span>Подчеркните все источники добавленного сахара: сахар в чай и кофе, сладости, сладкие напитки и йогурты.</span></li>
+      <li><span>Оцените, набралось ли около 400 г овощей и фруктов (ориентир: 1 яблоко ≈ 150–200 г, порция салата ≈ 150 г).</span></li>
+      <li><span>Выберите одну замену на ближайшую неделю, как в примере с Ириной.</span></li>
+    </ol>
+    <p><b>Отметьте, что сделали:</b></p>
+    <div style="display:grid;gap:8px" id="checks">
+      <label class="check"><input type="checkbox" id="c1"> Записала рацион за день</label>
+      <label class="check"><input type="checkbox" id="c2"> Разметила приёмы пищи по тарелке</label>
+      <label class="check"><input type="checkbox" id="c3"> Нашла источники добавленного сахара</label>
+      <label class="check"><input type="checkbox" id="c4"> Выбрала одну замену</label>
+    </div>
+    <p class="src">Вес ягод и фруктов — ориентировочный, без источника; для задания точность не важна.</p>
+  </div>
+</section>
+
+<section id="sources" class="sources">
+  <h2>Источники</h2>
+  <ol>
+    <li>МР 2.3.1.0253-21 «Нормы физиологических потребностей в энергии и пищевых веществах для различных групп населения РФ». Роспотребнадзор, 2021. <a href="https://sudact.ru/law/mr-2310253-21-231-gigiena-gigiena-pitaniia-ratsionalnoe/" target="_blank" rel="noopener">Текст (sudact.ru)</a> · <a href="https://base.garant.ru/402816140/" target="_blank" rel="noopener">Гарант</a></li>
+    <li>ВОЗ. Healthy diet. Информационный бюллетень, обновлён 26.01.2026. <a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener">who.int</a></li>
+    <li>ТР ТС 022/2011 «Пищевая продукция в части её маркировки», приложение 4. <a href="https://eec.eaeunion.org/upload/medialibrary/9db/TrTsPishevkaMarkirovka.pdf" target="_blank" rel="noopener">PDF, ЕЭК</a></li>
+    <li>Hall K.D. и соавт. Quantification of the effect of energy imbalance on bodyweight. Lancet, 2011. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3880593/" target="_blank" rel="noopener">PMC</a></li>
+    <li>Thomas D.M. и соавт. Can a weight loss of one pound a week be achieved with a 3500-kcal deficit? Int J Obesity, 2013. <a href="https://www.nature.com/articles/ijo201351" target="_blank" rel="noopener">nature.com</a></li>
+    <li>WHO/FAO/UNU. Protein and amino acid requirements in human nutrition. WHO TRS 935, 2007. <a href="https://iris.who.int/server/api/core/bitstreams/b7c5ec43-bc59-4b38-b702-3f0e96a06fa1/content" target="_blank" rel="noopener">PDF, ВОЗ</a></li>
+    <li>Harvard T.H. Chan School of Public Health. Healthy Eating Plate. <a href="https://nutritionsource.hsph.harvard.edu/healthy-eating-plate/" target="_blank" rel="noopener">hsph.harvard.edu</a></li>
+    <li>Лендинг Energy Diet HD, NL International (учебный пример формулировок). <a href="https://nlstar.com/en/catalog/energydiethd/landing/007-540874/" target="_blank" rel="noopener">nlstar.com</a></li>
+    <li>Astbury N.M. и соавт. A systematic review and meta-analysis of the effectiveness of meal replacements for weight loss. Obesity Reviews, 2019. <a href="https://ora.ox.ac.uk/objects/uuid:f0349179-d226-43c3-bc8f-d1aca396476a" target="_blank" rel="noopener">Oxford ORA</a></li>
+    <li>NHS. Unintentional weight loss. <a href="https://www.nhs.uk/conditions/unintentional-weight-loss/" target="_blank" rel="noopener">nhs.uk</a></li>
+  </ol>
+  <p class="src">Проверено 30.09.2026. Часть зарубежных сайтов может открываться нестабильно.</p>
+</section>
+
+<footer>
+  <a href="index.html" style="color:var(--accent)">← Оглавление курса</a>
+  <span>Следующий модуль: Микронутриенты и БАДы</span>
+  <span>Материал образовательный и не заменяет консультацию врача.</span>
+</footer>
+</div>
+
+<script>
+(function(){
+  var cards=[
+    ["Сколько ккал дают 1 г белка, жира и углеводов?","4, 9 и 4 ккал. Пищевые волокна — 2, алкоголь — 7."],
+    ["Что такое основной обмен?","Минимум энергии на жизнь в покое: дыхание, работа сердца и мозга, температура тела."],
+    ["Что такое КФА?","Коэффициент физической активности: во сколько раз активность увеличивает траты над основным обменом. Сидячая работа ≈ 1,4."],
+    ["Какая доля калорийности приходится на белки по нормам РФ?","12–14%. Для женщин это 60–90 г в сутки."],
+    ["Сколько насыщенных жиров и трансжиров допустимо?","Насыщенные — не более 10% калорийности, трансжиры — не более 1% (ВОЗ)."],
+    ["Какой предел добавленного сахара?","Менее 10% калорийности, ≈50 г при 2000 ккал. При избыточной массе тела — до 5% (РФ)."],
+    ["Почему правило «7700 ккал = 1 кг» неточно?","При снижении веса уменьшаются траты организма, поэтому реальная потеря примерно вдвое меньше прогноза."],
+    ["Как устроена тарелка здорового питания?","½ овощи и фрукты, ¼ цельные злаки, ¼ белковые продукты; вода и растительное масло."]
+  ];
+  var i=0, card=document.getElementById('card');
+  function showCard(){document.getElementById('cardQ').textContent=cards[i][0];document.getElementById('cardA').textContent=cards[i][1];card.setAttribute('aria-pressed','false');document.getElementById('cardPos').textContent=(i+1)+' / '+cards.length;}
+  card.addEventListener('click',function(){card.setAttribute('aria-pressed',card.getAttribute('aria-pressed')==='true'?'false':'true');});
+  document.getElementById('nextCard').addEventListener('click',function(){i=(i+1)%cards.length;showCard();});
+  document.getElementById('prevCard').addEventListener('click',function(){i=(i-1+cards.length)%cards.length;showCard();});
+  showCard();
+
+  var qs=[
+    {q:"Почему жирные продукты обычно калорийнее остальных?",o:["В жирах больше сахара","1 г жира даёт 9 ккал, а белок и углеводы — по 4","Жиры медленнее перевариваются"],a:1,e:"Коэффициенты пересчёта закреплены в ТР ТС 022/2011: жиры — 9 ккал/г, белки и углеводы — 4 ккал/г. Поэтому при одинаковом весе жирный продукт даёт больше энергии."},
+    {q:"Как по российским нормам оценивают суточную потребность в энергии?",o:["Основной обмен × КФА","Масса тела × 30","По таблице калорийности продуктов"],a:0,e:"МР 2.3.1.0253-21: энерготраты = основной обмен × коэффициент физической активности. Это оценка для групп населения, а не точный расчёт для одного человека."},
+    {q:"Какой ориентир по добавленному сахару дают ВОЗ и нормы РФ?",o:["Не более 25% калорийности","Сахар нужно полностью исключить","Менее 10% калорийности"],a:2,e:"ВОЗ и МР 2.3.1.0253-21: менее 10% калорийности, при 2000 ккал это ≈50 г. Сахар в цельных фруктах и молоке к добавленному не относится."},
+    {q:"Клиентка рассчитала дефицит по правилу «7700 ккал = 1 кг» и ждёт −5 кг за месяц. Что ей сказать?",o:["Всё верно, так и будет","Правило завышает прогноз: организм снижает траты, реальная потеря примерно вдвое меньше","Нужно просто есть ещё меньше"],a:1,e:"Hall и соавт. (2011) и Thomas и соавт. (2013) показали, что статичное правило примерно вдвое переоценивает снижение веса. Жёсткие ограничения курс не рекомендует."},
+    {q:"Реклама: «Всего 200 калорий в порции — похудей за неделю!» Что верно?",o:["Коктейль сжигает жир","Эффект даёт дефицит энергии при замене более калорийного приёма пищи; срок «за неделю» не подтверждён","Любой коктейль вреден"],a:1,e:"Заменители пищи в программах дают за год в среднем на 1,4–6 кг больше снижения, чем сравниваемые диеты (Astbury, 2019), за счёт контроля калорийности. Обещание срока противоречит данным о динамике веса."}
+  ];
+  var box=document.getElementById('quizBox'), answered=0, correct=0;
+  function renderQuiz(){
+    box.innerHTML='';answered=0;correct=0;updateScore();
+    qs.forEach(function(item,qi){
+      var w=document.createElement('div');w.className='screen q';
+      var h=document.createElement('h3');h.textContent=(qi+1)+'. '+item.q;w.appendChild(h);
+      var opts=document.createElement('div');opts.className='opts';
+      var ex=document.createElement('p');ex.className='expl';ex.hidden=true;
+      item.o.forEach(function(t,oi){
+        var b=document.createElement('button');b.type='button';b.className='opt';b.id='q'+qi+'o'+oi;b.textContent=t;
+        b.addEventListener('click',function(){
+          var all=opts.querySelectorAll('.opt');all.forEach(function(x){x.disabled=true;});
+          all[item.a].classList.add('right');
+          var ok=oi===item.a;if(!ok)b.classList.add('wrong');
+          answered++;if(ok)correct++;updateScore();
+          ex.innerHTML='';var v=document.createElement('b');v.className=ok?'ok':'no';v.textContent=ok?'Верно. ':'Не совсем. ';ex.appendChild(v);ex.appendChild(document.createTextNode(item.e));ex.hidden=false;
+        });
+        opts.appendChild(b);
+      });
+      w.appendChild(opts);w.appendChild(ex);box.appendChild(w);
+    });
+  }
+  function updateScore(){document.getElementById('score').textContent=answered<qs.length?('Ответов: '+answered+' из '+qs.length):('Результат: '+correct+' из '+qs.length+(correct>=4?' — отлично':' — перечитайте шпаргалку'));}
+  document.getElementById('resetQuiz').addEventListener('click',renderQuiz);
+  renderQuiz();
+
+  ['c1','c2','c3','c4'].forEach(function(id){
+    var el=document.getElementById(id);
+    try{el.checked=localStorage.getItem('m1-'+id)==='1';}catch(e){}
+    el.addEventListener('change',function(){try{localStorage.setItem('m1-'+id,el.checked?'1':'0');}catch(e){}});
+  });
+})();
+</script>
+
+</body>
+</html>
