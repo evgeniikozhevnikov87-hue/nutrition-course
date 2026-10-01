@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Модуль 3. Клетчатка, микробиота и вода</title>
+<title>Модуль 3. Пищеварение, клетчатка, микробиота и вода</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap">
@@ -12,23 +12,89 @@
 <body>
 <div class="wrap">
 <header class="top">
-  <span class="eyebrow">Основы питания · Модуль 3 из 8 · ~20 минут</span>
-  <h1>Клетчатка, микробиота и вода</h1>
-  <p class="lead">Сколько нужно пищевых волокон, что наука знает о микробиоте и откуда взялись «два литра воды».</p>
+  <span class="eyebrow">Основы питания · Модуль 3 из 8 · ~35 минут</span>
+  <h1>Пищеварение, клетчатка, микробиота и вода</h1>
+  <p class="lead">Как устроено пищеварение, сколько нужно пищевых волокон, что наука знает о микробиоте и откуда взялись «два литра воды».</p>
 </header>
 
 <nav class="chips" aria-label="Разделы модуля">
-  <a href="#goal">Цель</a><a href="#fiber">Клетчатка</a><a href="#micro">Микробиота</a><a href="#water">Вода</a><a href="#example">Пример</a><a href="#ad">Разбор рекламы</a><a href="#doctor">Когда к врачу</a><a href="#cheat">Шпаргалка</a><a href="#cards">Карточки</a><a href="#quiz">Тест</a><a href="#task">Задание</a><a href="#sources">Источники</a>
+  <a href="#goal">Цель</a><a href="#digest">Пищеварение</a><a href="#fiber">Клетчатка</a><a href="#micro">Микробиота</a><a href="#water">Вода</a><a href="#example">Пример</a><a href="#ad">Разбор рекламы</a><a href="#doctor">Когда к врачу</a><a href="#cheat">Шпаргалка</a><a href="#cards">Карточки</a><a href="#quiz">Тест</a><a href="#task">Задание</a><a href="#sources">Источники</a>
 </nav>
 
 <section id="goal">
   <div class="goal">
     <h2>После модуля вы сможете</h2>
     <ul>
+      <li>описать путь пищи по ЖКТ и где всасываются нутриенты;</li>
+      <li>объяснить, как нервы, гормоны и стресс влияют на пищеварение;</li>
       <li>назвать норму пищевых волокон и продукты, из которых их получить;</li>
       <li>отличить доказанное о микробиоте от маркетинга;</li>
       <li>объяснить, когда пробиотики имеют смысл, а когда нет;</li>
       <li>оценить потребность в воде без мифа о «восьми стаканах».</li>
+    </ul>
+  </div>
+</section>
+
+<section id="digest">
+  <h2>Как устроено пищеварение</h2>
+  <figure class="screen" aria-labelledby="figDcap">
+    <svg viewBox="0 0 340 520" role="img" aria-label="Путь пищи по пищеварительной системе и что происходит в каждом отделе">
+      <g font-size="12.5" fill="var(--ink)">
+        <rect x="10" y="8" width="320" height="58" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="22" y="30" font-weight="700">Рот</text>
+        <text x="22" y="48">жевание; слюна смачивает пищу,</text>
+        <text x="22" y="62">её фермент начинает расщеплять крахмал</text>
+        <path d="M170 68 L170 80" stroke="var(--muted)" stroke-width="2"/><path d="M165 76 L170 84 L175 76 Z" fill="var(--muted)"/>
+        <rect x="10" y="86" width="320" height="44" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="22" y="106" font-weight="700">Пищевод</text>
+        <text x="22" y="122">перистальтика (волны сокращений)</text>
+        <path d="M170 132 L170 144" stroke="var(--muted)" stroke-width="2"/><path d="M165 140 L170 148 L175 140 Z" fill="var(--muted)"/>
+        <rect x="10" y="150" width="320" height="58" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="22" y="172" font-weight="700">Желудок</text>
+        <text x="22" y="190">кислота и ферменты расщепляют белки;</text>
+        <text x="22" y="204">пища перемешивается в кашицу (химус)</text>
+        <path d="M170 210 L170 222" stroke="var(--muted)" stroke-width="2"/><path d="M165 218 L170 226 L175 218 Z" fill="var(--muted)"/>
+        <rect x="10" y="228" width="320" height="150" rx="12" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="22" y="250" font-weight="700">Тонкий кишечник: главное всасывание</text>
+        <text x="22" y="270">• сок поджелудочной железы: ферменты для</text>
+        <text x="22" y="286">  белков, жиров и углеводов</text>
+        <text x="22" y="304">• желчь из печени (хранится в желчном</text>
+        <text x="22" y="320">  пузыре) помогает переваривать жиры</text>
+        <text x="22" y="340">• всасываются аминокислоты, сахара, жирные</text>
+        <text x="22" y="356">  кислоты, витамины, минералы, вода</text>
+        <path d="M170 380 L170 392" stroke="var(--muted)" stroke-width="2"/><path d="M165 388 L170 396 L175 388 Z" fill="var(--muted)"/>
+        <rect x="10" y="398" width="320" height="76" rx="12" fill="var(--surface)" stroke="var(--veg)" stroke-width="2"/>
+        <text x="22" y="420" font-weight="700">Толстый кишечник</text>
+        <text x="22" y="438">всасывается вода; бактерии расщепляют</text>
+        <text x="22" y="454">остатки пищи (в т. ч. волокна)</text>
+        <text x="22" y="468">и синтезируют витамин K</text>
+        <text x="10" y="500" fill="var(--muted)">Печень распределяет всосавшиеся вещества</text>
+        <text x="10" y="516" fill="var(--muted)">по организму</text>
+      </g>
+    </svg>
+    <figcaption id="figDcap">Схема 1. Путь пищи от рта до толстого кишечника, по материалам NIDDK (NIH) [12].</figcaption>
+  </figure>
+
+  <div class="screen">
+    <h3>Как пищеварение регулируется</h3>
+    <ul>
+      <li><b>Нервы.</b> В стенке ЖКТ есть собственная нервная сеть — <span class="term">энтеральная нервная система</span>, её называют «вторым мозгом». Когда пища растягивает стенки, нервы ускоряют или замедляют продвижение пищи и выделение соков. Головной мозг запускает рефлексы: например, при виде еды начинает выделяться слюна [12].</li>
+      <li><b>Гормоны.</b> Клетки желудка и кишечника выделяют гормоны. Они сообщают, когда вырабатывать пищеварительные соки, и передают в мозг сигналы голода и насыщения [12].</li>
+    </ul>
+  </div>
+
+  <div class="screen">
+    <h3>Почему стресс влияет на пищеварение</h3>
+    <p>У здоровых добровольцев при стрессе желудок опорожняется медленнее, а толстый кишечник работает быстрее. Кишечник становится чувствительнее: например, при изжоге заброса кислоты не больше, но ощущается он сильнее. У людей с синдромом раздражённого кишечника реакция на стресс выражена сильнее [13].</p>
+    <p>Практически это значит: тяжесть, боль или расстройство стула в стрессовые периоды — частое явление. Если симптомы держатся или есть тревожные признаки (кровь, похудение, боль ночью), нужен врач.</p>
+  </div>
+
+  <div class="screen">
+    <h3>Кишечник, иммунитет и настроение</h3>
+    <ul>
+      <li><b>Иммунитет.</b> В стенке кишечника находится большой объём иммунной (лимфоидной) ткани — GALT. Она отличает пищу и полезные бактерии от возбудителей болезней [15].</li>
+      <li><b>Бактерии</b> помогают переваривать углеводы, которые не расщепляют наши ферменты, и синтезируют витамин K [12].</li>
+      <li><b>Настроение.</b> Связь «микробиота — кишечник — мозг» активно изучают. Основные механизмы показаны на животных; исследования на людях продолжаются, и выводов для практики пока мало [14]. Обещания «улучшить настроение через микрофлору» — пока без надёжных доказательств.</li>
     </ul>
   </div>
 </section>
@@ -91,7 +157,7 @@
         <text x="24" y="384" fill="var(--muted)">Международный консенсус, 2024 [7]</text>
       </g>
     </svg>
-    <figcaption id="fig1cap">Схема 1. Что известно о микробиоте: три уровня уверенности.</figcaption>
+    <figcaption id="fig1cap">Схема 2. Что известно о микробиоте: три уровня уверенности.</figcaption>
   </figure>
   <div class="screen">
     <h3>Что из этого следует</h3>
@@ -118,7 +184,7 @@
         <text x="10" y="162" fill="var(--muted)">В жару и при нагрузке нужно больше</text>
       </g>
     </svg>
-    <figcaption id="fig2cap">Схема 2. Ориентир EFSA по общей воде для взрослой женщины: 2,0 л в сутки из всех источников [8].</figcaption>
+    <figcaption id="fig2cap">Схема 3. Ориентир EFSA по общей воде для взрослой женщины: 2,0 л в сутки из всех источников [8].</figcaption>
   </figure>
   <div class="screen">
     <h3>Откуда «два литра» и что на самом деле</h3>
@@ -221,7 +287,7 @@
       <li><span>Для 2–3 упакованных продуктов найдите на этикетке «пищевые волокна» на 100 г.</span></li>
       <li><span>Отметьте, были ли цельные злаки и бобовые. Если нет, выберите одну замену из примера.</span></li>
       <li><span>Посчитайте напитки за день: вода, чай, кофе, молоко, суп. Сравните с ориентиром ≈1,6 л.</span></li>
-      <li><span>Найдите в интернете одно обещание «восстановить микрофлору» и оцените его по схеме 1.</span></li>
+      <li><span>Найдите в интернете одно обещание «восстановить микрофлору» и оцените его по схеме 2.</span></li>
     </ol>
     <p><b>Отметьте, что сделали:</b></p>
     <div style="display:grid;gap:8px">
@@ -248,7 +314,11 @@
     <li>Valtin H. "Drink at least eight glasses of water a day." Really? Am J Physiol, 2002. <a href="https://journals.physiology.org/doi/full/10.1152/ajpregu.00365.2002" target="_blank" rel="noopener">physiology.org</a></li>
     <li>Thomas D.T., Erdman K.A., Burke L.M. Nutrition and Athletic Performance. Позиция ACSM, AND и DC, 2016. <a href="https://www.dietitians.ca/DietitiansOfCanada/media/Documents/Resources/noap-position-paper.pdf?ext=.pdf" target="_blank" rel="noopener">PDF</a></li>
     <li>Сайт дистрибьютора: программа Greenflash Detox (учебный пример формулировок). <a href="https://setevikpro.ru/products/greenflash-detox-programma-kompleksnogo-ochishheniya-organizma" target="_blank" rel="noopener">setevikpro.ru</a></li>
-  </ol>
+      <li>NIDDK (NIH). Your Digestive System &amp; How It Works. <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/digestive-system-how-it-works" target="_blank" rel="noopener">niddk.nih.gov</a></li>
+    <li>Mertz H. Stress and the Gut. UNC Center for Functional GI &amp; Motility Disorders. <a href="https://www.med.unc.edu/ibs/wp-content/uploads/sites/450/2017/10/Stress-and-the-Gut.pdf" target="_blank" rel="noopener">PDF</a></li>
+    <li>Cryan J.F. и соавт. The Microbiota-Gut-Brain Axis. Physiol Rev, 2019. <a href="https://research.ucc.ie/en/publications/the-microbiota-gut-brain-axis/" target="_blank" rel="noopener">аннотация</a></li>
+    <li>Vighi G. и соавт. Allergy and the gastrointestinal system. Clin Exp Immunol, 2008. <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/j.1365-2249.2008.03713.x" target="_blank" rel="noopener">Wiley</a></li>
+</ol>
   <p class="src">Проверено 30.09.2026.</p>
 </section>
 
@@ -261,6 +331,10 @@
 <script>
 window.M={key:'m3',
 cards:[
+["Где всасывается большинство нутриентов?","В тонком кишечнике: аминокислоты, сахара, жирные кислоты, витамины, минералы."],
+["Что делает желчь?","Помогает переваривать жиры и некоторые витамины; вырабатывается печенью, хранится в желчном пузыре."],
+["Как стресс влияет на ЖКТ?","Замедляет опорожнение желудка, ускоряет работу толстого кишечника, повышает чувствительность."],
+["Что такое энтеральная нервная система?","Собственная нервная сеть в стенке ЖКТ, регулирует движение пищи и выделение соков."],
 ["Норма пищевых волокон?","20–25 г в сутки по нормам РФ, ВОЗ — не менее 25 г."],
 ["Что показал обзор Reynolds (Lancet, 2019)?","У тех, кто ест больше клетчатки, смертность ниже на 15–30%; изучалась клетчатка из обычной еды."],
 ["Что значит «источник пищевых волокон» на этикетке?","Не меньше 3 г волокон на 100 г продукта; «высокое содержание» — не меньше 6 г."],

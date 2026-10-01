@@ -102,19 +102,25 @@ svg text{font-family:var(--f-body)}
 .sources a{color:var(--accent);word-break:break-word}
 footer{padding-block:28px 0;color:var(--muted);font-size:.85rem;display:grid;gap:6px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;width:100%;font-size:.92rem}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+.tbl th{color:var(--muted);font-weight:600;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase}
+.kv dt{white-space:normal;max-width:9.5em}
+.kv dd{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
 
 <div class="wrap">
 <header class="top">
-  <span class="eyebrow">Основы питания · Модуль 1 из 8 · ~25 минут</span>
+  <span class="eyebrow">Основы питания · Модуль 1 из 8 · ~40 минут</span>
   <h1>Энергия и макронутриенты</h1>
   <p class="lead">Откуда организм берёт энергию, сколько её нужно и зачем нам белки, жиры и углеводы.</p>
 </header>
 
 <nav class="chips" aria-label="Разделы модуля">
-  <a href="#goal">Цель</a><a href="#energy">Энергия</a><a href="#macro">Макронутриенты</a><a href="#plate">Тарелка</a><a href="#example">Пример</a><a href="#ad">Разбор рекламы</a><a href="#doctor">Когда к врачу</a><a href="#cheat">Шпаргалка</a><a href="#cards">Карточки</a><a href="#quiz">Тест</a><a href="#task">Задание</a><a href="#sources">Источники</a>
+  <a href="#goal">Цель</a><a href="#energy">Энергия</a><a href="#macro">Макронутриенты</a><a href="#deep">Подробнее</a><a href="#plate">Тарелка</a><a href="#example">Пример</a><a href="#ad">Разбор рекламы</a><a href="#doctor">Когда к врачу</a><a href="#cheat">Шпаргалка</a><a href="#cards">Карточки</a><a href="#quiz">Тест</a><a href="#task">Задание</a><a href="#sources">Источники</a>
 </nav>
 
 <section id="goal">
@@ -270,6 +276,86 @@ footer{padding-block:28px 0;color:var(--muted);font-size:.85rem;display:grid;gap
     </dl>
     <p><span class="term">Добавленный сахар</span> — сахар, мёд, сиропы, которые добавляют в еду и напитки. Сахар в цельных фруктах и молоке сюда не входит.</p>
     <p class="src">Источники: МР 2.3.1.0253-21 [1]; ВОЗ [2]</p>
+  </div>
+</section>
+
+<section id="deep">
+  <h2>Подробнее о макронутриентах</h2>
+
+  <div class="screen">
+    <span class="n">Белки · 1 / 2</span>
+    <h3>Из чего состоят белки</h3>
+    <p>Белки — длинные цепочки из <span class="term">аминокислот</span>. В пищеварении белок расщепляется в желудке и тонком кишечнике до аминокислот, они всасываются в кровь [15], а из них организм собирает свои белки: мышцы, ферменты, гормоны, антитела.</p>
+    <p><b>Незаменимые аминокислоты</b> организм не синтезирует сам, их нужно получать с едой. У взрослых их девять: гистидин, изолейцин, лейцин, лизин, метионин, фенилаланин, треонин, триптофан, валин [6].</p>
+  </div>
+
+  <div class="screen">
+    <span class="n">Белки · 2 / 2</span>
+    <h3>Полноценный и неполноценный белок</h3>
+    <p><span class="term">Полноценный</span> белок содержит все незаменимые аминокислоты в нужных пропорциях и хорошо усваивается. Качество белка оценивают индексом <span class="term">DIAAS</span>: 1,0 и выше — отлично.</p>
+    <dl class="kv">
+      <dt>0,90–1,08</dt><dd>молоко, сывороточный белок (животные белки)</dd>
+      <dt>0,66–0,92</dt><dd>соя, горох — лучшие из растительных</dd>
+      <dt>0,38–0,52</dt><dd>пшеница, кукуруза</dd>
+    </dl>
+    <p><b>Почему растительный белок «неполноценный»:</b> в злаках мало лизина, в бобовых — серосодержащих аминокислот (метионина). Если сочетать злаки и бобовые <b>в течение дня</b>, они дополняют друг друга: гречка и фасоль, хлеб и хумус, рис и чечевица [13].</p>
+    <p class="src">Источники: WHO TRS 935 [6]; Herreman и соавт., 2020, обзор DIAAS [13]</p>
+  </div>
+
+  <div class="screen">
+    <span class="n">Жиры · 1 / 2</span>
+    <h3>Типы жиров</h3>
+    <dl class="kv">
+      <dt>Насыщенные</dt><dd>сливочное масло, сало, жирное мясо, сыр, сливки, пальмовое и кокосовое масло. Ограничивать до ≤10% калорий</dd>
+      <dt>Мононенасыщенные</dt><dd>оливковое и рапсовое масло, орехи, авокадо</dd>
+      <dt>Полиненасыщенные омега-6</dt><dd>подсолнечное, кукурузное, соевое масло, семечки</dd>
+      <dt>Полиненасыщенные омега-3</dt><dd>жирная рыба (сельдь, скумбрия, лосось), льняное масло, грецкие орехи</dd>
+      <dt>Трансжиры</dt><dd>частично гидрогенизированные жиры в выпечке, фастфуде, некоторых маргаринах. Не больше 1% калорий, лучше меньше</dd>
+    </dl>
+    <p>ВОЗ (2023): насыщенные жиры полезно <b>заменять</b> полиненасыщенными, растительными мононенасыщенными жирами или углеводами из продуктов, богатых клетчаткой. Такая замена снижает «плохой» холестерин (ЛПНП) и риск сердечно-сосудистых болезней [11].</p>
+    <p>Оптимальное соотношение омега-6 к омега-3 по нормам РФ — от 5:1 до 10:1 [1].</p>
+  </div>
+
+  <div class="screen">
+    <span class="n">Жиры · 2 / 2</span>
+    <h3>Холестерин и почему жиры — не враг</h3>
+    <p><span class="term">Холестерин</span> нужен организму: он входит в состав мембран всех клеток, из него образуются стероидные гормоны, витамин D и желчные кислоты. Большую часть холестерина организм производит сам, в основном печень [12].</p>
+    <ul>
+      <li><b>ЛПНП («плохой»)</b> переносит холестерин к тканям. При избытке он откладывается в стенках сосудов (атеросклероз).</li>
+      <li><b>ЛПВП («хороший»)</b> возвращает холестерин в печень [12].</li>
+    </ul>
+    <p>Жиры нужны для усвоения витаминов A, D, E, K: желчь помогает переваривать жиры и некоторые витамины [15]. Цель не «убрать жир», а выбрать его тип и держать общую долю около 30% калорий.</p>
+    <p class="src">Источники: ВОЗ, 2023 [11]; StatPearls «Cholesterol» [12]; NIDDK [15]; МР 2.3.1.0253-21 [1]</p>
+  </div>
+
+  <div class="screen">
+    <span class="n">Углеводы · 1 / 2</span>
+    <h3>Простые и сложные</h3>
+    <dl class="kv">
+      <dt>Простые</dt><dd>моносахариды (глюкоза, фруктоза, галактоза) и дисахариды (сахароза — обычный сахар, лактоза — молочный сахар, мальтоза). Быстро всасываются</dd>
+      <dt>Сложные</dt><dd>крахмал (крупы, хлеб, картофель, бобовые) расщепляется до глюкозы постепенно; пищевые волокна наши ферменты не переваривают (модуль 3)</dd>
+    </dl>
+    <p>Важнее деления на «простые и сложные» другой вопрос: <b>в каком продукте</b> находятся углеводы. Сахар во фрукте идёт вместе с водой и волокнами, добавленный сахар в газировке — нет. Ограничивать рекомендуют именно свободные (добавленные) сахара [2].</p>
+  </div>
+
+  <div class="screen">
+    <span class="n">Углеводы · 2 / 2</span>
+    <h3>Гликемический индекс и нагрузка</h3>
+    <p><span class="term">Гликемический индекс (ГИ)</span> показывает, насколько быстро углеводы продукта повышают сахар в крови по сравнению с чистой глюкозой (ГИ глюкозы = 100).</p>
+    <dl class="kv">
+      <dt>≤ 55</dt><dd>низкий ГИ</dd>
+      <dt>56–69</dt><dd>средний</dd>
+      <dt>≥ 70</dt><dd>высокий</dd>
+    </dl>
+    <p><span class="term">Гликемическая нагрузка (ГН)</span> учитывает и количество углеводов: ГН = ГИ × углеводы в порции (г) ÷ 100. Низкая ≤10, высокая ≥20. Пример: продукт с ГИ 70 и 15 г углеводов в порции даёт ГН ≈ 10, то есть низкую.</p>
+    <p><b>Что влияет на ГИ:</b> степень обработки, время варки, спелость, наличие жира, белка и клетчатки в блюде.</p>
+    <p><b>Ограничения:</b> ГИ отдельных продуктов плохо предсказывает ГИ целого блюда — расчёт завышает его на 22–50%. Американская диабетическая ассоциация считает доказательства для практических рекомендаций по ГИ ограниченными [14].</p>
+    <p class="src">Источник: Linus Pauling Institute [14]</p>
+  </div>
+
+  <div class="screen">
+    <h3>Вода — тоже нутриент</h3>
+    <p>Вода не даёт энергии, но участвует в пищеварении: слюна и пищеварительные соки на водной основе, а сама вода всасывается в тонком и толстом кишечнике [15]. Сколько её нужно и откуда миф о «8 стаканах» — в модуле 3.</p>
   </div>
 </section>
 
@@ -434,7 +520,12 @@ footer{padding-block:28px 0;color:var(--muted);font-size:.85rem;display:grid;gap
     <li>Лендинг Energy Diet HD, NL International (учебный пример формулировок). <a href="https://nlstar.com/en/catalog/energydiethd/landing/007-540874/" target="_blank" rel="noopener">nlstar.com</a></li>
     <li>Astbury N.M. и соавт. A systematic review and meta-analysis of the effectiveness of meal replacements for weight loss. Obesity Reviews, 2019. <a href="https://ora.ox.ac.uk/objects/uuid:f0349179-d226-43c3-bc8f-d1aca396476a" target="_blank" rel="noopener">Oxford ORA</a></li>
     <li>NHS. Unintentional weight loss. <a href="https://www.nhs.uk/conditions/unintentional-weight-loss/" target="_blank" rel="noopener">nhs.uk</a></li>
-  </ol>
+      <li>ВОЗ. Saturated fatty acid and trans-fatty acid intake for adults and children: WHO guideline, 2023. <a href="https://www.ncbi.nlm.nih.gov/books/NBK594779/" target="_blank" rel="noopener">NCBI Bookshelf</a></li>
+    <li>StatPearls. Biochemistry, Cholesterol. <a href="https://www.ncbi.nlm.nih.gov/sites/books/NBK513326/" target="_blank" rel="noopener">NCBI Bookshelf</a></li>
+    <li>Herreman L. и соавт. Comprehensive overview of the quality of plant- and animal-sourced proteins based on DIAAS. Food Sci Nutr, 2020. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/fsn3.1809" target="_blank" rel="noopener">Wiley</a> · <a href="https://encyclopedia.pub/entry/8430" target="_blank" rel="noopener">обзор</a></li>
+    <li>Linus Pauling Institute. Glycemic Index and Glycemic Load. <a href="https://lpi.oregonstate.edu/mic/food-beverages/glycemic-index-glycemic-load" target="_blank" rel="noopener">lpi.oregonstate.edu</a></li>
+    <li>NIDDK (NIH). Your Digestive System &amp; How It Works. <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/digestive-system-how-it-works" target="_blank" rel="noopener">niddk.nih.gov</a></li>
+</ol>
   <p class="src">Проверено 30.09.2026. Часть зарубежных сайтов может открываться нестабильно.</p>
 </section>
 
@@ -455,6 +546,11 @@ footer{padding-block:28px 0;color:var(--muted);font-size:.85rem;display:grid;gap
     ["Сколько насыщенных жиров и трансжиров допустимо?","Насыщенные — не более 10% калорийности, трансжиры — не более 1% (ВОЗ)."],
     ["Какой предел добавленного сахара?","Менее 10% калорийности, ≈50 г при 2000 ккал. При избыточной массе тела — до 5% (РФ)."],
     ["Почему правило «7700 ккал = 1 кг» неточно?","При снижении веса уменьшаются траты организма, поэтому реальная потеря примерно вдвое меньше прогноза."],
+    ["Сколько незаменимых аминокислот у взрослых?","Девять: гистидин, изолейцин, лейцин, лизин, метионин, фенилаланин, треонин, триптофан, валин."],
+    ["Как сделать растительный белок полноценнее?","Сочетать в течение дня злаки (мало лизина) и бобовые (мало метионина): гречка + фасоль, хлеб + хумус."],
+    ["Чем заменять насыщенные жиры?","Полиненасыщенными и растительными мононенасыщенными жирами или углеводами из продуктов с клетчаткой (ВОЗ, 2023)."],
+    ["Зачем нужен холестерин?","Мембраны клеток, стероидные гормоны, витамин D, желчные кислоты; большую часть производит сам организм."],
+    ["Низкий, средний и высокий ГИ?","≤55 низкий, 56–69 средний, ≥70 высокий; ГИ глюкозы = 100."],
     ["Как устроена тарелка здорового питания?","½ овощи и фрукты, ¼ цельные злаки, ¼ белковые продукты; вода и растительное масло."]
   ];
   var i=0, card=document.getElementById('card');
